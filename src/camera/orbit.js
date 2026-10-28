@@ -6,7 +6,7 @@ export const MAX_CAMERA_DISTANCE = 1500;
 export const FISHEYE_START_DISTANCE = 14;
 export const FREE_LOOK_RADIUS = 6.7;
 export const ORBIT_LOOK_RADIUS = 18;
-export const INTERIOR_DIAGONAL_FOV = 100;
+export const INTERIOR_DIAGONAL_FOV = 180;
 
 const smooth = (start, end, value) => {
   const t = Math.max(0, Math.min(1, (value - start) / (end - start)));
@@ -49,16 +49,12 @@ export function advanceOrbit(azimuth, elapsedSeconds) {
 
 export function orbitPose(center, state, aspect) {
   const radius = state.distance * Math.max(1, 1.05 / aspect);
-  const inward = 1 - smooth(0, FISHEYE_START_DISTANCE, radius);
-  // A rectilinear lens preserves straight lines and the shape of the sky.
-  // Cap its diagonal rather than letting portrait or ultrawide frames stretch.
-  const interiorTan = Math.tan((INTERIOR_DIAGONAL_FOV * Math.PI) / 360) / Math.hypot(aspect, 1);
-  const normalTan = Math.tan((CAMERA_FOV_DEGREES * Math.PI) / 360);
-  // Beyond the wide framing limit, hold the target plane's framing while
-  // retreating. The same aspect correction applies to both endpoint distances.
-  const lensZoom = Math.max(1, state.distance / DOLLY_ZOOM_START_DISTANCE);
-  const fov =
-    (2 * Math.atan((normalTan + (interiorTan - normalTan) * inward) / lensZoom) * 180) / Math.PI;
+  const travel = Math.max(0,Math.min(1,1-radius/FISHEYE_START_DISTANCE));
+  const inward = travel*travel*(3-2*travel);
+  // Keep the exterior perspective lens and blend its rays into the selected
+  // 180-degree diagonal stereographic fisheye as the eye enters the sphere.
+  const lensZoom = Math.max(1,state.distance/DOLLY_ZOOM_START_DISTANCE);
+  const fov = 2*Math.atan(Math.tan(CAMERA_FOV_DEGREES*Math.PI/360)/lensZoom)*180/Math.PI;
   // Confinement follows the logarithmic travel of the wheel/pinch. Both ends
   // have zero slope, and maximum pullback is exactly level at any aspect ratio.
   const progress =
@@ -106,10 +102,9 @@ export function orbitPose(center, state, aspect) {
     fov,
     lensZoom,
     dollyZoom: lensZoom > 1,
-    fisheye: 0,
-    projection: 'perspective',
-    diagonalFov:
-      (2 * Math.atan(Math.hypot(aspect, 1) * Math.tan((fov * Math.PI) / 360)) * 180) / Math.PI,
+    fisheye: inward,
+    projection: inward === 1 ? 'stereographic-fisheye' : inward > 0 ? 'fisheye-transition' : 'perspective',
+    diagonalFov: (1-inward)*2*Math.atan(Math.hypot(aspect,1)*Math.tan(fov*Math.PI/360))*180/Math.PI+inward*180,
     elevation,
     trackElevation,
     angularFreedom,

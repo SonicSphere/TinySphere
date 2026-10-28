@@ -1,3 +1,4 @@
+import { createFisheyeRenderer } from './camera/fisheye.js';
 import { applyMatteWrapMaterial, validateWrapMask, WRAP_MATERIAL } from './engine/wrap-material.js';
 import { compactLayout } from './ui/ui.js';
 import { FORM_STYLES, createTubeLights } from './engine/tube-lights.js';
@@ -576,6 +577,7 @@ window.addEventListener('beforeunload', () => {
   remember();
   releaseCameraGestures();
   lookWipe?.dispose();
+  fisheyeRenderer?.dispose();
   selectedSource = 'tree-voices';
   resumeDefault = false;
   tabAudio.disconnect();
@@ -585,7 +587,7 @@ document.addEventListener('visibilitychange', () => {
   last = 0;
   remember();
 });
-let cameraPose = null;
+let cameraPose = null, fisheyeRenderer;
 function updateCamera() {
   if (!center) return;
   cameraPose = orbitPose(center.toArray(), state, camera.aspect);
@@ -599,13 +601,10 @@ function updateCamera() {
   camera.lookAt(...cameraPose.target);
 }
 function renderScene() {
-  environment.updateCamera(camera);
-  tubeLights.updateCamera(
-    camera,
-    renderer.getDrawingBufferSize(cameraPixels).y,
-    renderer.getPixelRatio(),
-  );
-  renderer.render(scene, camera);
+  fisheyeRenderer.render(camera, cameraPose, (view, height, pixelRatio) => {
+    environment.updateCamera(view);
+    tubeLights.updateCamera(view, height, pixelRatio);
+  });
 }
 function resize() {
   const box = canvas.parentElement.getBoundingClientRect();
@@ -915,6 +914,7 @@ async function loadModel() {
   tubeLights.update(state, camera, skyPresetLighting(state.atmosphere));
   environment.update(state, pixels, camera, tubeLights.group.visible ? 'tube-leds' : 'cloth');
   loadingStage(96, 'Preparing the view');
+  fisheyeRenderer = await createFisheyeRenderer(renderer, scene, center);
   if (renderer.compileAsync) await renderer.compileAsync(scene, camera);
   renderScene();
   loadingStage(97, 'Preparing music');
@@ -1003,6 +1003,7 @@ async function loadModel() {
     environment: () => environment?.stats(),
     camera: () => ({
       ...cameraPose,
+      ...fisheyeRenderer.stats(),
       angularSpeed: ORBIT_RADIANS_PER_SECOND,
       automatic: state.orbit,
       renderPasses: 1,

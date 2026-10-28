@@ -1,157 +1,105 @@
 import * as THREE from '../vendor/three.module.js';
+import {fisheyeLensGLSL,lensModel} from './fisheye-lens.js';
+import {prepareFisheyeMeshes} from './fisheye-mesh.js';
 
-// A full-frame 180-degree diagonal equidistant lens. Cube views from one eye
-// avoid the missing edges and stretched center of warping a perspective image.
-export function createFisheyeRenderer(renderer, scene) {
-  let target,
-    cube,
-    faceSize = 0,
-    captureViews = 0;
-  const drawingSize = new THREE.Vector2();
-  const exposure = { value: renderer.toneMappingExposure };
-  const restored = [];
+// One-pass vertex projection follows TouchDesigner Render TOP's documented
+// technique. Large triangles are linearly refined; original surfaces stay fixed.
+const vertexHeader=`
+${fisheyeLensGLSL}
+uniform float directStrength;
+uniform float directAspect;
+uniform float directNormalTan;
+uniform vec2 directNearFar;
+uniform mat4 directInverseProjection;
+varying vec3 directViewPosition;
+vec4 directProject(vec4 clip){
+ vec4 h=directInverseProjection*clip;
+ vec3 p=h.xyz/max(.00000001,h.w);
+ directViewPosition=p;
+ float d=max(.000001,length(p)),xy=length(p.xy);
+ // atan(xy,-p.z) returned zero for a positive numerator / negative-zero
+ // denominator on this GPU. Exact vertical views put an entire ring of
+ // vertices on that plane, collapsing it to the optical axis. The normalized
+ // cosine has a defined, continuous value at both signed zeros and both poles.
+ float theta=acos(clamp(-p.z/d,-1.,1.)),diag=length(vec2(directAspect,1.));
+ float r=fishRadius(theta,diag);
+ if(directStrength<.99999){
+   float upper=max(diag,r/max(.0001,directStrength));
+   for(int i=0;i<8;i++){
+     float t=r*directNormalTan;
+     float value=mix(atan(t),fishAngle(r,diag),directStrength)-theta;
+     float slope=mix(directNormalTan/(1.+t*t),fishSlope(r,diag),directStrength);
+     r=clamp(r-value/max(.000001,slope),0.,upper);
+   }
+ }
+ vec2 lens=(xy>.000001?p.xy/xy:vec2(0.))*r;
+ vec2 ndc=vec2(lens.x/directAspect,lens.y);
+ float n=directNearFar.x,f=directNearFar.y;
+ float z=(f+n)/(f-n)-2.*f*n/((f-n)*d);
+ return vec4(ndc*d,z*d,d);
+}
+`;
+const fragmentHeader=`uniform float directStrength; varying vec3 directViewPosition;\n`;
+
+export async function createFisheyeRenderer(renderer, scene, center) {
+  const meshes = await prepareFisheyeMeshes(scene, center);
   const uniforms = {
-    view: { value: null },
-    aspect: { value: 1 },
-    normalHalfFov: { value: Math.PI / 9 },
-    strength: { value: 0 },
-    frontScale: { value: 1 },
+    fishStereographic: {value: 1}, directStrength: {value: 0},
+    directAspect: {value: 1}, directNormalTan: {value: 1},
+    directNearFar: {value: new THREE.Vector2(.05, 20000)},
+    directInverseProjection: {value: new THREE.Matrix4()},
   };
-  const material = new THREE.ShaderMaterial({
-    uniforms,
-    depthTest: false,
-    depthWrite: false,
-    toneMapped: false,
-    vertexShader:
-      'varying vec2 screen; void main(){screen=position.xy;gl_Position=vec4(position.xy,0.,1.);}',
-    fragmentShader: `uniform samplerCube view; uniform float aspect;
-      uniform float normalHalfFov; uniform float strength; uniform float frontScale; varying vec2 screen;
-      void main(){
-        vec2 p=vec2(screen.x*aspect,screen.y);float r=length(p);
-        float normalAngle=atan(r*tan(normalHalfFov));
-        float fishAngle=r/length(vec2(aspect,1.))*1.570796326794897;
-        float theta=mix(normalAngle,fishAngle,strength);
-        vec3 ray=vec3(r>0.000001?p/r*sin(theta):vec2(0.),-cos(theta));
-        gl_FragColor=textureCube(view,vec3(ray.xy/frontScale,ray.z));
-        #include <colorspace_fragment>
-      }`,
+  const objects = [], materials = new Set(), restored = [];
+  scene.traverse(object => {
+    if (!object.isMesh && !object.isPoints) return;
+    objects.push({object, culled: object.frustumCulled});
+    for (const material of [object.material].flat()) if (material) materials.add(material);
   });
-  const geometry = new THREE.BufferGeometry();
-  geometry.setAttribute(
-    'position',
-    new THREE.Float32BufferAttribute([-1, -1, 0, 3, -1, 0, -1, 3, 0], 3),
-  );
-  const screenScene = new THREE.Scene(),
-    screenCamera = new THREE.Camera();
-  const screen = new THREE.Mesh(geometry, material);
-  screen.frustumCulled = false;
-  screenScene.add(screen);
-
-  // Three omits display tone mapping when rendering to a texture. Preserve it
-  // per material in the cube, including the terrain's deliberate opt-out, so
-  // entering the fisheye doesn't change the approved lighting or sky colors.
-  const materials = new Set();
-  scene.traverse((object) => {
-    for (const m of [object.material].flat()) if (m?.toneMapped) materials.add(m);
-  });
-  for (const m of materials) {
-    const compile = m.onBeforeCompile,
-      cacheKey = m.customProgramCacheKey;
-    const key = cacheKey.call(m);
-    m.onBeforeCompile = function (shader, activeRenderer) {
+  const backdrop = objects.find(({object}) => object.name === 'PLAYA / analytic infinite ground and sky')?.object;
+  if (!backdrop) throw Error('Missing fisheye analytic background');
+  for (const material of materials) {
+    const compile = material.onBeforeCompile, cache = material.customProgramCacheKey;
+    const key = cache.call(material);
+    material.onBeforeCompile = function(shader, activeRenderer) {
       compile.call(this, shader, activeRenderer);
-      if (!target || activeRenderer.getRenderTarget() !== target) return;
-      shader.uniforms.toneMappingExposure = exposure;
-      shader.fragmentShader =
-        '#define TONE_MAPPING\n' +
-        THREE.ShaderChunk.tonemapping_pars_fragment +
-        '\nvec3 toneMapping(vec3 color){return ACESFilmicToneMapping(color);}\n' +
-        shader.fragmentShader;
-    };
-    m.customProgramCacheKey = () => key + '|fisheye-display-cube-v1';
-    m.needsUpdate = true;
-    restored.push(() => {
-      m.onBeforeCompile = compile;
-      m.customProgramCacheKey = cacheKey;
-      m.needsUpdate = true;
-    });
-  }
-
-  function render(camera, pose, prepareCamera) {
-    if (!pose.fisheye) {
-      renderer.render(scene, camera);
-      return;
-    }
-    renderer.getDrawingBufferSize(drawingSize);
-    const size = Math.min(
-      2048,
-      Math.max(
-        512,
-        Math.ceil(Math.max(drawingSize.x, drawingSize.y) / (1 + 1.5 * pose.fisheye) / 256) * 256,
-      ),
-    );
-    if (!target) {
-      target = new THREE.WebGLCubeRenderTarget(size, {
-        type: THREE.HalfFloatType,
-        minFilter: THREE.LinearFilter,
-        magFilter: THREE.LinearFilter,
-        generateMipmaps: false,
-      });
-      cube = new THREE.CubeCamera(0.05, camera.far, target);
-      cube.coordinateSystem = renderer.coordinateSystem;
-      cube.updateCoordinateSystem();
-      uniforms.view.value = target.texture;
-      faceSize = size;
-    } else if (size !== faceSize) {
-      target.setSize(size, size);
-      faceSize = size;
-    }
-    exposure.value = renderer.toneMappingExposure;
-    cube.position.copy(camera.position);
-    cube.quaternion.copy(camera.quaternion);
-    cube.updateMatrixWorld(true);
-    // While every ray fits the forward face, tighten that face's lens and
-    // render only it. This keeps the narrow-lens handoff crisp and inexpensive.
-    const frontScale = Math.min(1, Math.tan((pose.diagonalFov * Math.PI) / 360));
-    uniforms.frontScale.value = frontScale;
-    cube.children[5].fov = (-2 * Math.atan(frontScale) * 180) / Math.PI;
-    cube.children[5].updateProjectionMatrix();
-    uniforms.aspect.value = camera.aspect;
-    uniforms.normalHalfFov.value = (camera.fov * Math.PI) / 360;
-    uniforms.strength.value = pose.fisheye;
-    const previousTarget = renderer.getRenderTarget(),
-      previousFace = renderer.getActiveCubeFace();
-    const previousMip = renderer.getActiveMipmapLevel(),
-      autoReset = renderer.info.autoReset;
-    renderer.info.autoReset = false;
-    renderer.info.reset();
-    try {
-      // Camera-aligned capture never samples the rear (+Z) face: even the
-      // corners of the final lens stop at 90 degrees from the forward axis.
-      const faces = frontScale < 1 ? [5] : [0, 1, 2, 3, 5];
-      captureViews = faces.length;
-      for (const face of faces) {
-        const view = cube.children[face];
-        prepareCamera(view, faceSize, 1);
-        renderer.setRenderTarget(target, face);
-        renderer.render(scene, view);
+      Object.assign(shader.uniforms, uniforms);
+      if (material === backdrop.material) {
+        shader.fragmentShader = fisheyeLensGLSL + '\nuniform float directStrength; uniform float directAspect; uniform float directNormalTan;\n' + shader.fragmentShader;
+        const ray = 'vec3 d=normalize(mat3(cameraWorld)*viewRay.xyz);';
+        if (!shader.fragmentShader.includes(ray)) throw Error('Fisheye background ray contract changed');
+        shader.fragmentShader = shader.fragmentShader.replace(ray, `vec3 cameraRay=viewRay.xyz;
+          if(directStrength>0.){
+            vec2 p=vec2(screen.x*directAspect,screen.y);float r=length(p);
+            float theta=mix(atan(r*directNormalTan),fishAngle(r,length(vec2(directAspect,1.))),directStrength);
+            cameraRay=vec3(r>.000001?p/r*sin(theta):vec2(0.),-cos(theta));
+          }
+          vec3 d=normalize(mat3(cameraWorld)*cameraRay);`);
+      } else {
+        shader.vertexShader = vertexHeader + shader.vertexShader.replace(/void\s+main\s*\(\s*\)/, 'void originalProjectionMain()') + `
+          void main(){originalProjectionMain();directViewPosition=vec3(0.,0.,-1.);
+            if(directStrength>0.)gl_Position=directProject(gl_Position);}`;
+        shader.fragmentShader = fragmentHeader + shader.fragmentShader.replace(/void\s+main\s*\(\s*\)/, 'void originalFragmentMain()') + `
+          void main(){if(directStrength>0.&&directViewPosition.z>0.)discard;originalFragmentMain();}`;
       }
-      renderer.setRenderTarget(previousTarget, previousFace, previousMip);
-      renderer.render(screenScene, screenCamera);
-    } finally {
-      renderer.setRenderTarget(previousTarget, previousFace, previousMip);
-      renderer.info.autoReset = autoReset;
-      prepareCamera(camera, drawingSize.y, renderer.getPixelRatio());
-    }
+    };
+    material.customProgramCacheKey = () => key + '|direct-stereographic-fisheye-v1';
+    material.needsUpdate = true;
+    restored.push(() => {material.onBeforeCompile = compile;material.customProgramCacheKey = cache;material.needsUpdate = true;});
   }
   return {
-    render,
-    stats: () => ({ faceSize, projection: '180-degree diagonal equidistant', captureViews }),
-    dispose() {
-      target?.dispose();
-      geometry.dispose();
-      material.dispose();
-      for (const restore of restored) restore();
+    render(camera, pose, prepareCamera) {
+      const active = pose.fisheye > 0;
+      meshes.apply(active);
+      uniforms.directStrength.value = pose.fisheye;
+      uniforms.directAspect.value = camera.aspect;
+      uniforms.directNormalTan.value = Math.tan(camera.fov * Math.PI / 360);
+      uniforms.directNearFar.value.set(.05, camera.far);
+      uniforms.directInverseProjection.value.copy(camera.projectionMatrixInverse);
+      for (const {object, culled} of objects) object.frustumCulled = active ? false : culled;
+      prepareCamera(camera, renderer.domElement.height, renderer.getPixelRatio());
+      renderer.render(scene, camera);
     },
+    stats: () => ({lens: lensModel(), renderPasses: 1, refinement: meshes.stats()}),
+    dispose() {for (const restore of restored) restore();for (const {object, culled} of objects) object.frustumCulled = culled;meshes.dispose();},
   };
 }

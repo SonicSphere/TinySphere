@@ -10,3 +10,9 @@
 - Screenshots must come from the actual app. Keep saved state with release captures; do not pass generated illustrations off as screenshots. Browser automation is separate from human listening and physical-device acceptance.
 - This is a standalone source preparation. Do not overwrite the existing viewer or historical experiments, publish a Site, push GitHub, recreate native authoring work, or synchronize Google Drive as part of routine source edits.
 - Deliver reports in HTML. Do not produce a PDF unless explicitly requested.
+
+## Approved direct fisheye — 28 October 2026
+
+- Jeremy approved the curved 12 mm reference for main and this contributor tree. `src/camera/fisheye.js` draws one scene pass; `fisheye-lens.js` contains the shared mapping; `fisheye-mesh.js` prepares linear 50 cm refinement and restores original meshes outside. Preserve the exact-pole correction and current camera freedom/dolly leveling.
+- Lens is an ideal Samyang-style stereographic approximation normalized to 180° diagonal, not a calibrated optical model. Keep the perspective focal-length readout separate from this curved reference. See `docs/camera.md`. No experiment controls, renderer comparison, timing collector or session logs are included. Existing opt-in desktop tools are preserved.
+- Main Site publication is tracked separately from this GitHub preparation. No GitHub remote is configured.
