@@ -1,3 +1,4 @@
+import {lensAtZoom,MIN_ZOOM_POSITION,gestureZoomPosition} from './optical-zoom.js';
 export const ORBIT_RADIANS_PER_SECOND = 0.014;
 export const CAMERA_FOV_DEGREES = 40;
 // Start at half the old limit so the smallest sphere is twice as large on screen.
@@ -37,7 +38,7 @@ export function zoomCameraDistance(distance, factor) {
   const travel = distance >= start ? Math.log(distance / start) : distance / start - 1;
   const next = travel + Math.log(factor);
   return Math.max(
-    0,
+    MIN_ZOOM_POSITION,
     Math.min(MAX_CAMERA_DISTANCE, next >= 0 ? start * Math.exp(next) : start * (next + 1)),
   );
 }
@@ -48,7 +49,8 @@ export function advanceOrbit(azimuth, elapsedSeconds) {
 }
 
 export function orbitPose(center, state, aspect) {
-  const radius = state.distance * Math.max(1, 1.05 / aspect);
+  const radius = Math.max(0,state.distance) * Math.max(1, 1.05 / aspect);
+  const opticalLens=lensAtZoom(state.distance<0?state.distance:gestureZoomPosition(state));
   const travel = Math.max(0,Math.min(1,1-radius/FISHEYE_START_DISTANCE));
   const inward = travel*travel*(3-2*travel);
   // Keep the exterior perspective lens and blend its rays into the selected
@@ -103,8 +105,10 @@ export function orbitPose(center, state, aspect) {
     lensZoom,
     dollyZoom: lensZoom > 1,
     fisheye: inward,
+    lensScale: opticalLens.scale,
+    physicalDistance: Math.max(0,state.distance),
     projection: inward === 1 ? 'stereographic-fisheye' : inward > 0 ? 'fisheye-transition' : 'perspective',
-    diagonalFov: (1-inward)*2*Math.atan(Math.hypot(aspect,1)*Math.tan(fov*Math.PI/360))*180/Math.PI+inward*180,
+    diagonalFov: (1-inward)*2*Math.atan(Math.hypot(aspect,1)*Math.tan(fov*Math.PI/360))*180/Math.PI+inward*opticalLens.diagonalDegrees,
     elevation,
     trackElevation,
     angularFreedom,

@@ -39,12 +39,12 @@ vec4 directProject(vec4 clip){
  return vec4(ndc*d,z*d,d);
 }
 `;
-const fragmentHeader=`uniform float directStrength; varying vec3 directViewPosition;\n`;
+const fragmentHeader=`uniform float directStrength; uniform float directBackCos; varying vec3 directViewPosition;\n`;
 
 export async function createFisheyeRenderer(renderer, scene, center) {
   const meshes = await prepareFisheyeMeshes(scene, center);
   const uniforms = {
-    fishStereographic: {value: 1}, directStrength: {value: 0},
+    fishStereographic: {value: 1}, fishScale: {value:1}, directStrength: {value: 0}, directBackCos: {value:0},
     directAspect: {value: 1}, directNormalTan: {value: 1},
     directNearFar: {value: new THREE.Vector2(.05, 20000)},
     directInverseProjection: {value: new THREE.Matrix4()},
@@ -79,18 +79,22 @@ export async function createFisheyeRenderer(renderer, scene, center) {
           void main(){originalProjectionMain();directViewPosition=vec3(0.,0.,-1.);
             if(directStrength>0.)gl_Position=directProject(gl_Position);}`;
         shader.fragmentShader = fragmentHeader + shader.fragmentShader.replace(/void\s+main\s*\(\s*\)/, 'void originalFragmentMain()') + `
-          void main(){if(directStrength>0.&&directViewPosition.z>0.)discard;originalFragmentMain();}`;
+          void main(){if(directStrength>0.&&-directViewPosition.z/max(.000001,length(directViewPosition))<directBackCos)discard;originalFragmentMain();}`;
       }
     };
-    material.customProgramCacheKey = () => key + '|direct-stereographic-fisheye-v1';
+    material.customProgramCacheKey = () => key + '|direct-stereographic-wide-fisheye-v1';
     material.needsUpdate = true;
     restored.push(() => {material.onBeforeCompile = compile;material.customProgramCacheKey = cache;material.needsUpdate = true;});
   }
+  let latestDiagonal=180;
   return {
     render(camera, pose, prepareCamera) {
       const active = pose.fisheye > 0;
       meshes.apply(active);
       uniforms.directStrength.value = pose.fisheye;
+      uniforms.fishScale.value=pose.lensScale??1;
+      latestDiagonal=pose.diagonalFov;
+      uniforms.directBackCos.value=pose.diagonalFov>180.000001?Math.cos(pose.diagonalFov*Math.PI/360):0;
       uniforms.directAspect.value = camera.aspect;
       uniforms.directNormalTan.value = Math.tan(camera.fov * Math.PI / 360);
       uniforms.directNearFar.value.set(.05, camera.far);
@@ -99,7 +103,7 @@ export async function createFisheyeRenderer(renderer, scene, center) {
       prepareCamera(camera, renderer.domElement.height, renderer.getPixelRatio());
       renderer.render(scene, camera);
     },
-    stats: () => ({lens: lensModel(), renderPasses: 1, refinement: meshes.stats()}),
+    stats: () => ({lens: {...lensModel(),name:latestDiagonal>180.001?Math.round(latestDiagonal)+'° virtual fisheye':'12 mm fisheye reference',diagonalDegrees:latestDiagonal}, renderPasses: 1, refinement: meshes.stats()}),
     dispose() {for (const restore of restored) restore();for (const {object, culled} of objects) object.frustumCulled = culled;meshes.dispose();},
   };
 }

@@ -1,3 +1,11 @@
+# Approved center lens continuation — 28 October 2026
+
+Jeremy selected the full **330° diagonal** range and requested promotion to main. At the exact sphere center, continued inward wheel/pinch input widens the stereographic lens from 180° to 330°. Reversing first narrows the lens, then resumes the outward dolly. The eye stays fixed at the center during optical travel; both poles, drag direction, orbit and View reset retain their current behavior. Keep the direct single-scene render, Balanced mesh refinement and shared analytic sky/ground mapping. Existing contributor controls, appearance and music behavior remain.
+
+Public state keeps `distance` nonnegative. The optional `lensFov` field stores 180–330° coverage at the center in saved views and shot recipes. Legacy distance-only views retain the original lens; `resetView()` restores the arrival pose and 180° lens. Negative distances from the local experiment are accepted as input aliases and normalized. Prototype controls, cube-reference renderers and QA meters are excluded from production. The 330° range is a virtual artistic lens; 360° is the stereographic singularity.
+
+Release QA: `output/BM-WideLens/promotion/qa/` in the parent Blender workspace. Local publication candidate: **http://127.0.0.1:4192/BM-WideLens/promotion/site/dist/**. Preserve the separate experiment at **http://127.0.0.1:4192/BM-WideLens/**. Reuse the strict 4192 server.
+
 # Tiny Sphere contributor source
 
 - Permanent local app URL: **http://127.0.0.1:4192/TinySphere/dist/**. Contributor studio: **http://127.0.0.1:4192/TinySphere/docs/playground.html**. Release introduction: **http://127.0.0.1:4192/TinySphere/docs/release.html**. Keep port 4192 strict; report a conflict instead of selecting another port.

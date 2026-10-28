@@ -1,3 +1,4 @@
+import {normalizeOpticalInput} from '../src/camera/optical-zoom.js';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
@@ -56,7 +57,8 @@ for (const compact of [false, true])
       ['sonic-sphere-public-studio-v1', JSON.stringify(scenario.legacy)],
     ]);
     const context = {
-      ARRIVAL_DEFAULTS,
+      normalizeOpticalInput,
+    ARRIVAL_DEFAULTS,
       LOOK_INFO,
       PALETTES,
       FORM_STYLES,
@@ -77,7 +79,7 @@ for (const compact of [false, true])
       },
     };
     const actual = JSON.parse(vm.runInNewContext(startup + '\nJSON.stringify(state)', context));
-    assert.deepEqual(actual, scenario.expected ?? ARRIVAL_DEFAULTS, scenario.name);
+    assert.deepEqual(actual, {lensFov:180,...(scenario.expected ?? ARRIVAL_DEFAULTS)}, scenario.name);
     results.push({ scenario: scenario.name, compact, passed: true });
   }
 console.log(JSON.stringify({ passed: true, cases: results.length, results }, null, 2));

@@ -1,3 +1,4 @@
+import {normalizeOpticalInput,gestureZoomPosition} from './camera/optical-zoom.js';
 import { createFisheyeRenderer } from './camera/fisheye.js';
 import { applyMatteWrapMaterial, validateWrapMask, WRAP_MATERIAL } from './engine/wrap-material.js';
 import { compactLayout } from './ui/ui.js';
@@ -76,6 +77,7 @@ const limits = {
   flashTime: [0, 1e9],
   realTime: [0, 1e9],
   distance: [0, MAX_CAMERA_DISTANCE],
+  lensFov: [180, 330],
   elevation: [-Math.PI / 2, Math.PI / 2],
   azimuth: [-1e6, 1e6],
 };
@@ -85,7 +87,7 @@ limits.mountainHaze = [0, 1];
 limits.ridgeDetail = [0, 1];
 Object.assign(limits, { sky: [0, 1], haze: [0.1, 2], lightSpill: [0, 2] });
 function validated(input) {
-  let next = { ...input };
+  let next = normalizeOpticalInput(input);
   // Restore the earlier view when opening preferences or links from the
   // removed study. The deleted artwork and camera mode cannot reactivate.
   if (next.look === 'photo' || next.photoScene) {
@@ -140,7 +142,7 @@ const cameraDefaults = {
 };
 // Every normal arrival restores the complete approved appearance, including
 // camera and animation phase. Earlier browser preferences cannot override it.
-const state = { ...defaults, ...linked, venue: 'burning-man', terrainRadius: 20 };
+const state = { ...defaults, lensFov: 180, ...linked, venue: 'burning-man', terrainRadius: 20 };
 // Nashville views refer to another model and cannot supply a camera here.
 if (Object.keys(linked).length && linkedVenue !== 'burning-man') {
   for (const key of ['distance', 'elevation', 'azimuth']) state[key] = defaults[key];
@@ -567,6 +569,7 @@ const releaseCameraGestures = bindCameraGestures(canvas, {
   // distance confinement is not applied a second time on every pointer move.
   getState: () => ({
     ...getState(),
+    distance: gestureZoomPosition(state),
     elevation: center
       ? orbitPose(center.toArray(), state, camera.aspect).controlElevation
       : state.elevation,

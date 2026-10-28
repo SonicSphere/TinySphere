@@ -39,4 +39,6 @@ Music and visual playback are independent. Audible startup can require a user ge
 
 At the exact center, negative elevation looks upward; `-Math.PI / 2` looks straight up. Positive elevation looks down. The contributor studio's Interior camera starts with a gentle upward view.
 
+Continued inward wheel/pinch input at the center widens the lens from 180° to 330° diagonal. `setState({distance:0,lensFov:330})` performs the same action. `distance` stays nonnegative and equals zero during optical travel; `lensFov` records that width in saved views and recipes. Legacy distance-only updates and `resetView()` restore 180°. Reversing the gesture narrows the lens before moving outward.
+
 Calling `capture()` exports the scene without the HTML controls. For reproducible imagery, pause music, disable orbit, set a seed and camera, hold all clocks with `seek()`, and save the resulting state. The contributor studio provides these controls without console commands.

@@ -32,7 +32,7 @@ export function bindCameraGestures(canvas, { getState, setState }) {
     } else {
       // Counter the lens magnification so mouse/touch drags stay controllable
       // through the dolly range, with the original feel at ordinary distances.
-      const turnScale = Math.min(1, DOLLY_ZOOM_START_DISTANCE / state.distance);
+      const turnScale = Math.min(1, DOLLY_ZOOM_START_DISTANCE / Math.max(.000001,state.distance));
       setState({
         azimuth: state.azimuth - (event.clientX - previous.x) * 0.005 * turnScale,
         elevation: state.elevation + (event.clientY - previous.y) * 0.004 * turnScale,

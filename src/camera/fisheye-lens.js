@@ -12,15 +12,16 @@ export function lensModel(id = DEFAULT_FISHEYE_LENS) {
 // Radius is in screen-height units; the screen corner has radius diagonal.
 export const fisheyeLensGLSL = `
 uniform float fishStereographic;
+uniform float fishScale;
 float fishAngle(float radius,float diagonal){
- float q=radius/diagonal;
+ float q=radius/diagonal*fishScale;
  return mix(q*1.570796326794897,2.*atan(q),fishStereographic);
 }
 float fishSlope(float radius,float diagonal){
- float q=radius/diagonal;
- return mix(1.570796326794897,2./(1.+q*q),fishStereographic)/diagonal;
+ float q=radius/diagonal*fishScale;
+ return mix(1.570796326794897,2./(1.+q*q),fishStereographic)*fishScale/diagonal;
 }
 float fishRadius(float theta,float diagonal){
- return diagonal*mix(theta/1.570796326794897,tan(min(theta,3.141592-0.0001)*.5),fishStereographic);
+ return diagonal/fishScale*mix(theta/1.570796326794897,tan(min(theta,3.141592-0.0001)*.5),fishStereographic);
 }
 `;
