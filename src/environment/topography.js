@@ -153,7 +153,11 @@ export function createTopography(scene, center, assets = {}) {
         // paint over it, especially when the dolly near plane slices the basin.
         // Retain terrain above the eye's horizon so distant ridges stay joined
         // to their base; discarding all low terrain would open a strip of sky.
-        if(height<12. && height<cameraPosition.z)discard;
+        // Keep pixels whose footprint straddles the eye-height horizon.
+        // Mesh interpolation and the analytic sky ray can disagree at the
+        // center of that pixel, leaving a one-pixel strip of bright sky.
+        float horizonFootprint=max(.00001,.5*fwidth(terrainPosition.z));
+        if(height<12. && height<cameraPosition.z-horizonFootprint)discard;
         float relief=smoothstep(12.,90.,height);
         float distance=length(terrainPosition.xy-cameraPosition.xy);
         float depth=1.-exp(-distance*(.7+.3*haze)/14000.);

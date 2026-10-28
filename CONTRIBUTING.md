@@ -4,7 +4,7 @@ The best first contribution is a light show or a theme. Start with something sma
 
 ## Get running
 
-Use Node.js 22+ and Python 3.9+. Run `npm run dev` and open <http://127.0.0.1:4192/TinySphere/dist/>. No package installation is required. Keep port 4192 fixed.
+Clone [SonicSphere/TinySphere](https://github.com/SonicSphere/TinySphere) and enter its directory. Use Node.js 22+ and Python 3.9+. Run `npm run dev` and open <http://127.0.0.1:4192/TinySphere/dist/>. No package installation is required. Keep port 4192 fixed.
 
 Source edits take effect after `npm run build` and a browser refresh. The server serves the generated build; it does not watch files.
 
@@ -32,4 +32,8 @@ Then open the browser. Check desktop and compact layouts, playback/pause, Vibe s
 
 Include a short description, a screenshot or recording, and the state or seed used for it. Explain any intended change to existing behavior. Add source and permission information for new assets to `src/asset-provenance.json` and `CREDITS.md`.
 
-Keep generated `dist/`, `.local/`, `.openai/`, private credentials, and machine-specific paths out of the source commit. Preserve the vendored licenses. The original-code license remains undecided; see [LICENSE-STATUS.md](LICENSE-STATUS.md).
+Keep generated `dist/`, `.local/`, `.openai/`, private credentials, and machine-specific paths out of the source commit. Preserve the vendored licenses. Original project contributions use the [MIT license](LICENSE); see [LICENSE-STATUS.md](LICENSE-STATUS.md) for third-party material.
+
+## Publishing
+
+Every push to `main` runs `npm run check`, then publishes the verified `dist/` build to [GitHub Pages](https://sonicsphere.github.io/TinySphere/). Pull requests run the same checks without publishing. The workflow can also be run manually from the repository's Actions tab. No deployment secrets or npm publication are needed.

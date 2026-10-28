@@ -7,6 +7,12 @@ export const FORM_WEIGHTS = Object.freeze({
   floatingLights: 5,
 });
 
+export const SPHERE_VIEWS = Object.freeze({
+  full: { label: 'Full sphere', cloths: true, tubes: false },
+  tubes: { label: 'Light tubes', cloths: false, tubes: true },
+  bare: { label: 'Bare sphere', cloths: false, tubes: false },
+});
+
 export function chooseForm(random = Math.random) {
   const roll = random() * 100;
   let upper = 0;
@@ -15,4 +21,17 @@ export function chooseForm(random = Math.random) {
     if (roll < upper) return form;
   }
   return 'floatingLights';
+}
+
+// Each roll selects visibility independently while preserving the frame form.
+export const SPHERE_VIEW_WEIGHTS = Object.freeze({ full: 80, tubes: 10, bare: 10 });
+
+export function chooseSphereView(random = Math.random) {
+  const roll = random() * 100;
+  let upper = 0;
+  for (const [view, weight] of Object.entries(SPHERE_VIEW_WEIGHTS)) {
+    upper += weight;
+    if (roll < upper) return view;
+  }
+  return 'bare';
 }

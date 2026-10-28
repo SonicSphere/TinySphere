@@ -313,7 +313,8 @@ export async function createPlayaEnvironment(
     uniforms.daylight.value = setting.daylight;
     uniforms.haze.value = dust;
     uniforms.photoDusk.value = setting.photoDusk;
-    if (emitterSource === 'tube-leds')
+    if (emitterSource === 'none') colors.fill(0);
+    else if (emitterSource === 'tube-leds')
       ledEmitters.update(
         pixels,
         state.brightness * setting.artVisibility,
@@ -352,9 +353,10 @@ export async function createPlayaEnvironment(
       groundMethod: 'analytic ray-plane intersection',
       skyMethod: 'world direction only; translation independent',
       cutawayVoxelCount: 0,
-      liveLights: lights.length,
+      liveLights: emitterSource === 'none' ? 0 : lights.length,
+      allocatedSphereLights: lights.length,
       contributingFixtures:
-        emitterSource === 'tube-leds'
+        emitterSource === 'none' ? 0 : emitterSource === 'tube-leds'
           ? ledEmitters.fixtureCount
           : groups.reduce((sum, g) => sum + g.fixtures.length, 0),
       emitterSource,

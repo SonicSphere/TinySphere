@@ -9,7 +9,7 @@ HOST = '127.0.0.1'
 PORT = 4192
 PREFIX = '/TinySphere/'
 URL = f'http://{HOST}:{PORT}{PREFIX}dist/'
-DOCUMENTS = {'README.md', 'CONTRIBUTING.md', 'CREDITS.md', 'LICENSE-STATUS.md'}
+DOCUMENTS = {'README.md', 'CONTRIBUTING.md', 'CREDITS.md', 'LICENSE', 'LICENSE-STATUS.md'}
 
 
 class Handler(SimpleHTTPRequestHandler):

@@ -1,9 +1,9 @@
 import {normalizeOpticalInput,gestureZoomPosition} from './camera/optical-zoom.js';
 import { createFisheyeRenderer } from './camera/fisheye.js';
 import { applyMatteWrapMaterial, validateWrapMask, WRAP_MATERIAL } from './engine/wrap-material.js';
-import { compactLayout } from './ui/ui.js';
+import './ui/ui.js';
 import { FORM_STYLES, createTubeLights } from './engine/tube-lights.js';
-import { FORM_WEIGHTS } from './engine/form-choice.js';
+import { FORM_WEIGHTS, SPHERE_VIEWS, SPHERE_VIEW_WEIGHTS, chooseSphereView } from './engine/form-choice.js';
 import {
   ORBIT_RADIANS_PER_SECOND,
   CAMERA_FOV_DEGREES,
@@ -11,6 +11,7 @@ import {
   advanceOrbit,
   orbitPose,
 } from './camera/orbit.js';
+import { sonyA7EquivalentMm } from './camera/lens.js';
 import {
   preloadAssets,
   loadBytes,
@@ -49,6 +50,7 @@ import { ARRIVAL_DEFAULTS } from './settings/arrival-defaults.js';
 import { LookWipe } from './engine/look-wipe.js';
 import { SHOWS } from './shows/index.js';
 import { THEMES, themeState } from './themes/index.js';
+import { createDesktopTools } from './ui/desktop-tools.js';
 
 const $ = (id) => document.getElementById(id),
   qaKey = new URLSearchParams(location.search).get('qa'),
@@ -108,6 +110,7 @@ function validated(input) {
     else if (k === 'look' && Object.hasOwn(LOOK_INFO, v)) valid[k] = v;
     else if (k === 'venue') valid[k] = 'burning-man';
     else if (k === 'formStyle' && Object.hasOwn(FORM_STYLES, v)) valid[k] = v;
+    else if (k === 'sphereView' && Object.hasOwn(SPHERE_VIEWS, v)) valid[k] = v;
     else if (k === 'palette' && Object.hasOwn(PALETTES, v)) valid[k] = v;
     else if (k === 'flashColorMode' && ['theme', 'custom'].includes(v)) valid[k] = v;
     else if (k === 'flashColor' && /^#[0-9a-f]{6}$/i.test(v)) valid[k] = v;
@@ -135,11 +138,6 @@ try {
     linked = validated(raw);
   }
 } catch {}
-const cameraDefaults = {
-  distance: compactLayout.matches ? 32 : 42,
-  elevation: -0.1,
-  azimuth: -0.9,
-};
 // Every normal arrival restores the complete approved appearance, including
 // camera and animation phase. Earlier browser preferences cannot override it.
 const state = { ...defaults, lensFov: 180, ...linked, venue: 'burning-man', terrainRadius: 20 };
@@ -300,11 +298,16 @@ let environment,
 let lookWipe = null,
   queuedLook = null,
   sourcePixels = null;
+let desktopTools = null,
+  clothVisibilityOverride = null,
+  tubeVisibilityOverride = null,
+  frozenShotPixels = null;
 const appearanceKeys = new Set([
   'look',
   'atmosphere',
   'palette',
   'formStyle',
+  'sphereView',
   'seed',
   'detail',
   'wildness',
@@ -369,15 +372,35 @@ function remember() {
 function getState() {
   return { ...state, time: state.flowTime };
 }
+function sphereVisibility(renderState = state) {
+  if (renderState.sphereVisibility) return renderState.sphereVisibility;
+  const form = FORM_STYLES[renderState.formStyle],
+    view = SPHERE_VIEWS[renderState.sphereView],
+    cloths = clothVisibilityOverride ?? view?.cloths ?? form.cloth,
+    tubes = tubeVisibilityOverride ?? (clothVisibilityOverride === null ? view?.tubes ?? form.lights : !clothVisibilityOverride);
+  return {
+    cloths, tubes,
+    mode: cloths ? 'full' : tubes ? 'tubes' : 'bare',
+    clothOverride: clothVisibilityOverride,
+    tubeOverride: tubeVisibilityOverride,
+  };
+}
 function applyFormStyle(renderState = state, updateUI = true) {
   const form = FORM_STYLES[renderState.formStyle];
+  const visibility = sphereVisibility(renderState);
   for (const [name, meshes] of Object.entries(formLayers))
-    for (const mesh of meshes) mesh.visible = form[name];
-  if (tubeLights) tubeLights.group.visible = form.lights;
+    for (const mesh of meshes)
+      mesh.visible = name === 'cloth' ? visibility.cloths : form[name];
+  if (tubeLights) tubeLights.group.visible = visibility.tubes;
   if (updateUI) document.body.dataset.formStyle = state.formStyle;
+}
+function lightingSource() {
+  return tubeLights.group.visible ? 'tube-leds'
+    : formLayers.cloth.some((mesh) => mesh.visible) ? 'cloth' : 'none';
 }
 function syncUI() {
   applyFormStyle();
+  desktopTools?.refresh();
   $('orbit').setAttribute('aria-pressed', String(state.orbit));
   $('mobile-orbit').setAttribute('aria-pressed', String(state.orbit));
   $('mobile-orbit-label').textContent = state.orbit ? 'Orbit on' : 'Orbit off';
@@ -393,7 +416,13 @@ function syncUI() {
 function setState(next) {
   const update = validated(next);
   delete update.venue;
-  const changesAppearance = Object.keys(update).some(
+  if (Object.keys(update).some((key) => appearanceKeys.has(key) ||
+      ['flowTime', 'washTime', 'flashTime', 'realTime'].includes(key)) || update.playing === true)
+    frozenShotPixels = null;
+  const changesView = update.sphereView
+    ? update.sphereView !== sphereVisibility().mode
+    : Boolean(update.formStyle && state.sphereView);
+  const changesAppearance = changesView || Object.keys(update).some(
     (key) => appearanceKeys.has(key) && update[key] !== state[key],
   );
   if (changesAppearance && lookWipe?.active) {
@@ -405,10 +434,16 @@ function setState(next) {
     changesAppearance && lookWipe
       ? {
           ...state,
+          sphereVisibility: sphereVisibility(),
           paletteColors:
             selectedSource === 'tree-voices' ? paletteWalk.colors(state.palette) : undefined,
         }
       : null;
+  // Dice choices supersede manual visibility; explicit legacy forms still work.
+  if (update.sphereView) {
+    clothVisibilityOverride = null;
+    tubeVisibilityOverride = null;
+  } else if (update.formStyle) delete state.sphereView;
   Object.assign(state, update);
   if (update.palette) paletteWalk.reset(state.palette);
   syncTimeOfDay();
@@ -457,10 +492,18 @@ window.addEventListener('error', () => {
 function toggleOrbit() {
   setState({ orbit: !state.orbit });
 }
+function resetView() {
+  setState({
+    distance: defaults.distance,
+    elevation: defaults.elevation,
+    azimuth: defaults.azimuth,
+    framing: defaults.framing,
+  });
+  return getState();
+}
 $('orbit').onclick = toggleOrbit;
 $('mobile-orbit').onclick = toggleOrbit;
-$('wide').onclick = () => setState({ ...cameraDefaults, distance: 65 });
-$('close').onclick = () => setState({ ...cameraDefaults, distance: 30, elevation: 0.1 });
+$('reset-view').onclick = resetView;
 const lookBag = [],
   skyBag = [];
 function drawDifferent(bag, choices, current) {
@@ -477,11 +520,13 @@ function randomizeLook() {
   const look = drawDifferent(lookBag, Object.keys(LOOKS), state.look);
   const atmosphere = drawDifferent(skyBag, SKY_PRESETS, state.atmosphere);
   const formStyle = state.formStyle;
+  const sphereView = chooseSphereView();
   const palettes = Object.keys(PALETTES).filter((id) => id !== state.palette);
   setState({
     look,
     atmosphere,
     formStyle,
+    sphereView,
     palette: palettes[Math.floor(Math.random() * palettes.length)],
     seed: 1 + Math.floor(Math.random() * 1000000),
     flowSpeed: Math.round((0.6 + Math.random() * 1.1) * 10) / 10,
@@ -489,7 +534,7 @@ function randomizeLook() {
     wildness: Math.round((0.2 + Math.random() * 0.65) * 20) / 20,
   });
   $('look-status').textContent =
-    FORM_STYLES[formStyle].label + ' · ' + LOOKS[look] + ' · ' + SKY_LABELS[atmosphere];
+    SPHERE_VIEWS[sphereView].label + ' · ' + LOOKS[look] + ' · ' + SKY_LABELS[atmosphere];
   const icon = $('new-look').querySelector('img');
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches)
     icon.animate([{ transform: 'rotate(-12deg)' }, { transform: 'rotate(348deg)' }], {
@@ -519,7 +564,7 @@ function drawLook(renderState, renderPixels) {
     renderState,
     renderPixels,
     camera,
-    tubeLights.group.visible ? 'tube-leds' : 'cloth',
+    lightingSource(),
   );
   renderScene();
 }
@@ -578,6 +623,7 @@ const releaseCameraGestures = bindCameraGestures(canvas, {
 });
 window.addEventListener('beforeunload', () => {
   remember();
+  desktopTools?.dispose();
   releaseCameraGestures();
   lookWipe?.dispose();
   fisheyeRenderer?.dispose();
@@ -614,6 +660,222 @@ function resize() {
   renderer.setSize(box.width, box.height, false);
   camera.aspect = box.width / box.height;
   camera.updateProjectionMatrix();
+}
+function captureFrame() {
+  drawCurrentFrame();
+  return canvas.toDataURL('image/png');
+}
+function shotCamera() {
+  const direction = camera.getWorldDirection(new THREE.Vector3());
+  const vertical = Math.hypot(direction.x, direction.y) < 1e-10;
+  const headingDirection = vertical
+    ? camera.up.clone().multiplyScalar(direction.z > 0 ? -1 : 1) : direction;
+  const lensState = fisheyeRenderer.stats(),
+    diagonal = Math.hypot(camera.aspect, 1),
+    normalTan = Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2);
+  const coverage = (radius) => {
+    const q = radius / diagonal,
+      fishAngle = lensState.lens.stereographic ? 2 * Math.atan(q*(cameraPose.lensScale??1)) : q * Math.PI / 2;
+    return THREE.MathUtils.radToDeg(2 * ((1 - cameraPose.fisheye) * Math.atan(radius * normalTan) + cameraPose.fisheye * fishAngle));
+  };
+  return {
+    ...cameraPose,
+    ...lensState,
+    position: camera.position.toArray(),
+    target: [...cameraPose.target],
+    up: camera.up.toArray(),
+    quaternionXYZW: camera.quaternion.toArray(),
+    matrixWorld: camera.matrixWorld.toArray(),
+    direction: direction.toArray(),
+    headingDegrees: (THREE.MathUtils.radToDeg(Math.atan2(headingDirection.x, headingDirection.y)) + 360) % 360,
+    headingReference: vertical ? 'camera up-vector yaw at vertical' : 'horizontal look direction',
+    pitchDegrees: THREE.MathUtils.radToDeg(Math.atan2(direction.z, Math.hypot(direction.x, direction.y))),
+    perspectiveFovDegrees: camera.fov,
+    verticalFovDegrees: coverage(1),
+    horizontalFovDegrees: coverage(camera.aspect),
+    diagonalFov: coverage(diagonal),
+    fullFrameEquivalentMm: cameraPose.fisheye > 0 ? null : sonyA7EquivalentMm(camera.fov, camera.aspect),
+    aspect: camera.aspect,
+    near: camera.near,
+    far: camera.far,
+  };
+}
+function shotRecipe() {
+  if (lookWipe.active || queuedLook) throw new Error('Wait for the appearance transition to finish.');
+  updateCamera();
+  if (!frozenShotPixels) {
+    const artworkState = selectedSource === 'tree-voices'
+      ? { ...state, paletteColors: paletteWalk.colors(state.palette) } : state;
+    renderArtwork(artworkPoints, state.flowTime, artworkState, pixels,
+      musicFrame ? { ...musicFrame, amount: state.audioReaction } : null);
+  }
+  drawCurrentFrame();
+  const box = canvas.getBoundingClientRect();
+  return {
+    format: 'tiny-sphere-shot',
+    version: 1,
+    capturedAt: new Date().toISOString(),
+    build: new URL(import.meta.url).searchParams.get('v') ?? 'source',
+    coordinates: { units: 'metres', up: '+Z', headingZero: '+Y', headingPositive: 'toward +X', pitchPositive: 'up' },
+    model: {
+      id: metadata.model_id,
+      revision: metadata.model_revision ?? metadata.source_revision_sha256,
+      geometrySha256: geometryAsset.decodedSha256,
+    },
+    state: getState(),
+    camera: shotCamera(),
+    rendering: {
+      cssWidth: box.width, cssHeight: box.height,
+      width: canvas.width, height: canvas.height,
+      pixelRatio: renderer.getPixelRatio(),
+      antialias: renderer.getContext().getContextAttributes().antialias,
+      toneMapping: renderer.toneMapping,
+      exposure: renderer.toneMappingExposure,
+      colorSpace: renderer.outputColorSpace,
+    },
+    clothVisibilityOverride,
+    tubeVisibilityOverride,
+    sphereView: sphereVisibility().mode,
+    paletteWalk: { ...paletteWalk.status(), bag: [...paletteWalk.bag] },
+    paletteColors: selectedSource === 'tree-voices' ? paletteWalk.colors(state.palette) : PALETTES[state.palette],
+    audio: {
+      source: selectedSource,
+      phase: activeAudio().phase,
+      positionSeconds: defaultMusic.media?.currentTime ?? null,
+      track: selectedSource === 'tree-voices' ? musicAsset : null,
+      features: musicFrame ? structuredClone(musicFrame) : null,
+    },
+    // Preserve the actual rendered light field too. Live audio analysis and
+    // a random palette walk cannot be recovered from a seed and track time.
+    lightField: { channels: 'linear RGBA', width: 22, height: fixtureCount, pixels: Array.from(pixels) },
+    replay: 'Use this build and viewport, then sphereStudio.restoreShot(recipe). The still holds the captured light field; sphereStudio.play() resumes procedural light.',
+  };
+}
+function restoreShot(recipe) {
+  if (recipe?.format !== 'tiny-sphere-shot' || recipe.version !== 1)
+    throw new Error('Unsupported shot recipe.');
+  if (recipe.model?.geometrySha256 !== geometryAsset.decodedSha256)
+    throw new Error('This recipe uses a different sphere model.');
+  const build = new URL(import.meta.url).searchParams.get('v') ?? 'source';
+  if (recipe.build !== build) throw new Error('Use the application build recorded in this recipe.');
+  if (!Number.isFinite(recipe.camera?.aspect) || Math.abs(recipe.camera.aspect - camera.aspect) > 0.002)
+    throw new Error(`Match the recipe viewport: ${recipe.rendering?.cssWidth} × ${recipe.rendering?.cssHeight} CSS pixels.`);
+  const samples = recipe.lightField?.pixels;
+  if (!Array.isArray(samples) || samples.length !== pixels.length ||
+      samples.some((value) => !Number.isFinite(value) || value < 0))
+    throw new Error('The recipe light field is incomplete.');
+  const restoredTubeOverride = recipe.tubeVisibilityOverride === undefined ? null : recipe.tubeVisibilityOverride;
+  if (![null, true, false].includes(recipe.clothVisibilityOverride) ||
+      ![null, true, false].includes(restoredTubeOverride) ||
+      !Number.isFinite(recipe.rendering?.exposure) || recipe.rendering.exposure <= 0)
+    throw new Error('The recipe rendering settings are incomplete.');
+  const walk = recipe.paletteWalk;
+  if (!walk || !Object.hasOwn(PALETTES, walk.current) || !Object.hasOwn(PALETTES, walk.target) ||
+      !Number.isFinite(walk.elapsed) || walk.elapsed < 0 || walk.elapsed >= 15 ||
+      !Number.isFinite(walk.mix) || walk.mix < 0 || walk.mix > 1 ||
+      !Array.isArray(walk.bag) || walk.bag.some((id) => !Object.hasOwn(PALETTES, id)))
+    throw new Error('The recipe palette state is incomplete.');
+  const restored = validated(recipe.state);
+  if (Object.keys(defaults).some((key) => key !== 'schemaVersion' && !(key in restored)))
+    throw new Error('The recipe appearance or camera settings are incomplete.');
+  lookWipe.cancel();
+  queuedLook = null;
+  selectedSource = 'tree-voices';
+  resumeDefault = false;
+  tabAudio.disconnect();
+  defaultMusic.pause();
+  setState({ ...restored, playing: false, orbit: false });
+  Object.assign(paletteWalk, { current: walk.current, target: walk.target, elapsed: walk.elapsed, mix: walk.mix, bag: [...walk.bag] });
+  clothVisibilityOverride = recipe.clothVisibilityOverride === null ? null : Boolean(recipe.clothVisibilityOverride);
+  tubeVisibilityOverride = restoredTubeOverride;
+  frozenShotPixels = new Float32Array(samples);
+  pixels.set(frozenShotPixels);
+  texture.needsUpdate = true;
+  material.uniforms.brightness.value = state.brightness;
+  renderer.toneMappingExposure = recipe.rendering.exposure;
+  lookWipe.cancel();
+  queuedLook = null;
+  updateCamera();
+  drawCurrentFrame();
+  syncUI();
+  syncWipeUI();
+  return { restored: true, width: canvas.width, height: canvas.height, frozenLighting: true };
+}
+function sceneInfo() {
+  const name = (id) => id.split('-').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ');
+  const walk = paletteWalk.status(),
+    walking = selectedSource === 'tree-voices',
+    palette = walking ? walk.current : state.palette,
+    theme = Object.values(THEMES).find((entry) =>
+      Object.entries(entry.state).every(([key, value]) => state[key] === value),
+    ),
+    visibility = sphereVisibility(),
+    pose = shotCamera(),
+    box = canvas.getBoundingClientRect(),
+    vector = (value) => value.map((v) => v.toFixed(5)).join(', ');
+  return {
+    show: LOOKS[state.look],
+    colors: walking ? paletteWalk.colors(state.palette) : PALETTES[state.palette],
+    settings: {
+      Atmosphere: SKY_LABELS[state.atmosphere],
+      'Light show': LOOKS[state.look],
+      Palette: walking && walk.mix > 0
+        ? `${name(palette)} → ${name(walk.target)} · ${Math.round(walk.mix * 100)}%`
+        : name(palette),
+      'Theme preset': theme?.name ?? 'Custom look',
+      Form: FORM_STYLES[state.formStyle].label,
+      'Light cloths': visibility.cloths ? 'On · 212 sails' : 'Off',
+      'Sphere view': SPHERE_VIEWS[visibility.mode].label,
+      Brightness: state.brightness.toFixed(2),
+      Haze: state.haze.toFixed(2),
+      'Light spill': state.lightSpill.toFixed(2),
+      'Flow speed': `${state.flowSpeed.toFixed(2)}×`,
+      Detail: state.detail.toFixed(2),
+      Wildness: `${Math.round(state.wildness * 100)}%`,
+      Flashes: state.flashIntensity > 0
+        ? `${state.flashColorMode === 'custom' ? state.flashColor : 'Theme color'} · ${state.flashIntensity.toFixed(1)}`
+        : 'Off',
+      Seed: String(state.seed),
+      Audio: selectedSource === 'tab' ? 'Browser tab' : 'Tree Voices',
+      Camera: state.orbit ? 'Orbit' : 'Still',
+      Lens: cameraPose.fisheye>0
+        ? `${cameraPose.diagonalFov>180.001?'Virtual fisheye':cameraPose.fisheye===1?'12 mm fisheye reference':'Fisheye transition'} · ${Math.round(cameraPose.diagonalFov)}° diagonal`
+        : `≈ ${Math.round(sonyA7EquivalentMm(camera.fov, camera.aspect))} mm`,
+    },
+    recipeReady: !lookWipe.active && !queuedLook,
+    recipe: {
+      'Camera XYZ (m)': vector(pose.position),
+      'Target XYZ (m)': vector(pose.target),
+      'Heading / pitch': `${pose.headingDegrees.toFixed(5)}° / ${pose.pitchDegrees.toFixed(5)}°`,
+      'Up vector XYZ': vector(pose.up),
+      'Quaternion XYZW': vector(pose.quaternionXYZW),
+      Projection: cameraPose.projection,
+      'FOV V / H / diagonal': `${pose.verticalFovDegrees.toFixed(5)}° / ${pose.horizontalFovDegrees.toFixed(5)}° / ${pose.diagonalFov.toFixed(5)}°`,
+      'Near / far (m)': `${pose.near.toFixed(5)} / ${pose.far.toFixed(0)}`,
+      'Distance / radius (m)': `${state.distance.toFixed(5)} / ${pose.radius.toFixed(5)}`,
+      'Azimuth / elevation (rad)': `${state.azimuth.toFixed(8)} / ${state.elevation.toFixed(8)}`,
+      'Viewport (CSS px)': `${box.width} × ${box.height}`,
+      'Image (px) / pixel ratio': `${canvas.width} × ${canvas.height} / ${renderer.getPixelRatio()}`,
+      'Exposure / tone mapping': `${renderer.toneMappingExposure} / ACES filmic`,
+      'Flow / wash clocks (s)': `${state.flowTime.toFixed(6)} / ${state.washTime.toFixed(6)}`,
+      'Flash / real clocks (s)': `${state.flashTime.toFixed(6)} / ${state.realTime.toFixed(6)}`,
+      'Wash speed / amount': `${state.washSpeed} / ${state.washAmount}`,
+      'Wash interval': `${state.washEvery} s`,
+      'Flash speed / count / size': `${state.flashSpeed} / ${state.flashCount} / ${state.flashSize}`,
+      'Burst intensity / interval': `${state.burstIntensity} / ${state.burstEvery} s`,
+      'Burst duration / start': `${state.buildTime} s / ${state.burstAt ?? 'None'}`,
+      'Auto burst / phrasing': `${state.autoBurst ? 'On' : 'Off'} / ${state.musicalPhrasing ? 'On' : 'Off'}`,
+      'Softness / edge fade': `${state.softness} / ${state.edgeFade}`,
+      'Mountain haze / ridge detail': `${state.mountainHaze} / ${state.ridgeDetail}`,
+      'Audio reaction': state.audioReaction,
+      'Music position (s)': (defaultMusic.media?.currentTime ?? 0).toFixed(6),
+      'Palette current / target': `${name(walk.current)} / ${name(walk.target)}`,
+      'Palette mix / elapsed (s)': `${walk.mix.toFixed(8)} / ${walk.elapsed.toFixed(6)}`,
+      'Lighting snapshot': frozenShotPixels ? 'Held recipe' : 'Live · saved in JSON',
+      'Model revision': metadata.model_revision ?? metadata.source_revision_sha256,
+      Build: new URL(import.meta.url).searchParams.get('v') ?? 'source',
+    },
+  };
 }
 async function createScene() {
   const scene = new THREE.Scene(),
@@ -915,7 +1177,7 @@ async function loadModel() {
   flashStats = renderArtwork(artworkPoints, state.flowTime, state, pixels, null);
   texture.needsUpdate = true;
   tubeLights.update(state, camera, skyPresetLighting(state.atmosphere));
-  environment.update(state, pixels, camera, tubeLights.group.visible ? 'tube-leds' : 'cloth');
+  environment.update(state, pixels, camera, lightingSource());
   loadingStage(96, 'Preparing the view');
   fisheyeRenderer = await createFisheyeRenderer(renderer, scene, center);
   if (renderer.compileAsync) await renderer.compileAsync(scene, camera);
@@ -933,6 +1195,22 @@ async function loadModel() {
   document.body.dataset.regions = String(fixtureCount * 22);
   await finishLoading();
   document.body.dataset.ready = 'true';
+  desktopTools = createDesktopTools({
+    capture: captureFrame,
+    getRecipe: shotRecipe,
+    getSphereVisibility: sphereVisibility,
+    setClothsVisible: (value) => {
+      clothVisibilityOverride = value;
+      tubeVisibilityOverride = null;
+      applyFormStyle();
+    },
+    setSphereView: (mode) => {
+      const view = SPHERE_VIEWS[mode];
+      clothVisibilityOverride = view.cloths;
+      tubeVisibilityOverride = view.tubes;
+      applyFormStyle();
+    },
+  });
   window.sphereStudio = {
     getState,
     listLooks: () => structuredClone(LOOK_INFO),
@@ -944,6 +1222,7 @@ async function loadModel() {
     setSkyPreset: (atmosphere) => setState({ atmosphere }),
     paletteWalkStatus: () => paletteWalk.status(),
     toggleOrbit,
+    resetView,
     triggerBurst,
     viewURL,
     shareView,
@@ -982,9 +1261,24 @@ async function loadModel() {
     getMode: () => window.studioShell.getMode(),
     setTrayOpen: (open) => window.studioShell.setTrayOpen(open),
     isTrayOpen: () => window.studioShell.isTrayOpen(),
+    setDebugMenuOpen: desktopTools.setOpen,
+    setDebugFPS: desktopTools.setFPS,
+    setDebugInfo: desktopTools.setInfo,
+    setClothsVisible: desktopTools.setCloths,
+    setSphereView: desktopTools.setSphereView,
+    getSphereView: () => sphereVisibility().mode,
+    debugStatus: desktopTools.getStatus,
+    clearDebug: desktopTools.clear,
+    downloadScreenshot: desktopTools.screenshot,
+    shotRecipe,
+    restoreShot,
+    copyShotRecipe: desktopTools.copyRecipe,
+    downloadShotRecipe: desktopTools.saveRecipe,
+    sceneInfo,
     setFormStyle: (formStyle) => setState({ formStyle }),
     listFormStyles: () => structuredClone(FORM_STYLES),
     formWeights: () => ({ ...FORM_WEIGHTS }),
+    sphereViewWeights: () => ({ ...SPHERE_VIEW_WEIGHTS }),
     formStats: () => ({
       style: state.formStyle,
       layers: Object.fromEntries(
@@ -1007,6 +1301,7 @@ async function loadModel() {
     camera: () => ({
       ...cameraPose,
       ...fisheyeRenderer.stats(),
+      fullFrameEquivalentMm: cameraPose.fisheye>0 ? null : sonyA7EquivalentMm(camera.fov, camera.aspect),
       angularSpeed: ORBIT_RADIANS_PER_SECOND,
       automatic: state.orbit,
       renderPasses: 1,
@@ -1033,10 +1328,7 @@ async function loadModel() {
       clocks: { flow: state.flowTime, wash: state.washTime, flashes: state.flashTime },
       ...flashStats,
     }),
-    capture: () => {
-      drawCurrentFrame();
-      return canvas.toDataURL('image/png');
-    },
+    capture: captureFrame,
   };
   function animate(now) {
     requestAnimationFrame(animate);
@@ -1131,11 +1423,11 @@ async function loadModel() {
           document.body.dataset.musicSection = section;
       }
     }
-    if (
+    if (!frozenShotPixels && (
       signature !== lastArtworkState ||
       state.audioReaction !== lastReaction ||
       (music && state.playing)
-    ) {
+    )) {
       flashStats = renderArtwork(artworkPoints, state.flowTime, artworkState, pixels, music);
       texture.needsUpdate = true;
       lastArtworkState = signature;
@@ -1143,6 +1435,7 @@ async function loadModel() {
     }
     lookWipe.advance(elapsed);
     drawCurrentFrame();
+
     syncWipeUI();
     if (document.body.dataset.renderedLook !== state.look)
       document.body.dataset.renderedLook = state.look;

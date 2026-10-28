@@ -1,9 +1,16 @@
-# Release license: undecided
+# MIT release
 
-The maintainer chose to leave the original-code license undecided while preparing this source tree. No `LICENSE` file or package license identifier is assigned in this snapshot. The package is marked `private` to prevent accidental npm publication.
+On 28 October 2026, the maintainer selected the [MIT license](LICENSE) and authorized publication of the complete Tiny Sphere project in the public [SonicSphere/TinySphere](https://github.com/SonicSphere/TinySphere) repository and on [GitHub Pages](https://sonicsphere.github.io/TinySphere/).
 
-Retain the existing Three.js MIT and Lucide ISC license files. Texture and terrain provenance is recorded separately in [CREDITS.md](CREDITS.md) and `src/asset-provenance.json`.
+MIT covers Tiny Sphere's original software, documentation, and original project materials. Preserve the copyright notice and license when redistributing them. `package.json` declares `MIT`; its `private` flag prevents accidental npm publication and does not affect the public repository or website.
 
-The installation model, Tree Voices recording, and images of the bundled experience require their own release-permission records. Their presence in the local source tree is not a new license statement. This preparation keeps the original assets and credits intact; it does not assert permission on behalf of the credited creators.
+Separately credited third-party material retains its existing rights and notices:
 
-Before publishing a licensed release, record the selected code license and the intended treatment of those assets here and in the README. No GitHub repository or public release is created by this source preparation.
+- Three.js: MIT, with the full notice in `src/vendor/THREE-LICENSE.txt`.
+- Lucide icons: ISC, with the full notice in `src/icons/LICENSE`.
+- Fine Grained Wood texture: CC0-1.0 from Poly Haven.
+- Terrain source: USGS public-domain data.
+- Sonic Sphere installation/model: credited to the Sonic Sphere Collective.
+- *Tree Voices*: credited to Rolfe Kent. The project license does not claim to relicense his composition or recording.
+
+The installation model, recording, and selected screenshots remain included as authorized by the maintainer. Creator attribution, source descriptions, and asset hashes remain in [CREDITS.md](CREDITS.md), `src/asset-provenance.json`, and `docs/screenshots.json`. Publication authorization does not replace a separate creator's license or grant.

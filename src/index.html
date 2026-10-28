@@ -12,6 +12,7 @@
     <link rel="icon" type="image/svg+xml" sizes="any" href="icons/red-outline-circle.svg" />
     <link rel="stylesheet" href="./ui/style.css" />
     <link rel="stylesheet" href="./ui/credits.css" />
+    <link rel="stylesheet" href="./ui/desktop-shortcuts.css" />
   </head>
   <body data-mode="studio" data-venue="burning-man" data-audio="idle">
     <header class="main-dock" aria-label="Sphere controls" inert>
@@ -114,8 +115,7 @@
         ></canvas>
         <div class="view-controls" role="group" aria-label="Camera view">
           <button type="button" id="orbit" aria-pressed="true">Slow orbit</button>
-          <button type="button" id="wide">Wide view</button>
-          <button type="button" id="close">Close-up</button>
+          <button type="button" id="reset-view">View reset</button>
         </div>
         <footer class="site-credits" aria-label="Credits">
           <span class="sphere-credit"
@@ -137,9 +137,11 @@
               >Rolfe Kent<span class="sr-only"> (opens in a new tab)</span></a
             ></span
           >
+          <span id="screenshot-hint" class="screenshot-hint" hidden>Press S for screenshot</span>
         </footer>
       </section>
     </main>
+  <span id="screenshot-status" class="sr-only" role="status"></span>
     <div id="loading" class="loading-overlay" role="status" aria-live="polite" aria-busy="true">
       <div class="loading-content">
         <h1 id="loading-title">Tiny Sphere is loading</h1>

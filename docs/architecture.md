@@ -36,4 +36,4 @@ Generated files are ignored by Git and reconstructed with `npm run build`. The s
 
 Keep new shows independent of the DOM, audio capture, camera, and model. Prefer a small registered module over a new rendering layer or generic plugin framework. Model edits, shader edits, and playback changes need focused regression coverage beyond content tests.
 
-The fixture geometry, LED winding, material response, grouped spill, and contextual terrain are visual approximations. This viewer is not a calibrated lighting simulation or a surveyed installation plan. Asset provenance and third-party licenses remain separate from the still-undecided original-code release license.
+The fixture geometry, LED winding, material response, grouped spill, and contextual terrain are visual approximations. This viewer is not a calibrated lighting simulation or a surveyed installation plan. Original project code is MIT licensed; asset provenance and third-party rights are recorded in [the license status](../LICENSE-STATUS.md) and [credits](../CREDITS.md).

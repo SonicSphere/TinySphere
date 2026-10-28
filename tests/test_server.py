@@ -46,7 +46,7 @@ class PreviewServerTest(unittest.TestCase):
         self.assertEqual(headers['Location'], '/TinySphere/dist/')
 
     def test_app_and_docs(self):
-        for path in ['/TinySphere/dist/', '/TinySphere/docs/release.html',
+        for path in ['/TinySphere/dist/', '/TinySphere/docs/architecture.md',
                      '/TinySphere/docs/playground.html?preview=1', '/TinySphere/README.md']:
             with self.subTest(path=path):
                 status, headers, body = self.request(path)

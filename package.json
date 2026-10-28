@@ -2,7 +2,14 @@
   "name": "tiny-sphere",
   "version": "1.1.0",
   "private": true,
-  "description": "A small world of light, color and music, inspired by the Sonic Sphere.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SonicSphere/TinySphere.git"
+  },
+  "homepage": "https://sonicsphere.github.io/TinySphere/",
+  "bugs": "https://github.com/SonicSphere/TinySphere/issues",
+  "description": "A 3D light and sound simulator for the Sonic Sphere at Burning Man.",
   "type": "module",
   "scripts": {
     "build": "python3 scripts/build.py",

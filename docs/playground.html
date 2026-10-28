@@ -114,7 +114,7 @@
     <h1>
       ⭕ Tiny Sphere <span style="font: 13px system-ui; color: #a8b8ad">/ Contributor studio</span>
     </h1>
-    <a href="release.html">Release introduction ↗</a>
+    <a href="../README.md">README ↗</a>
   </header>
   <main>
     <p>
@@ -153,10 +153,13 @@
       <pre id="state"></pre>
     </details>
     <details>
-      <summary>Reproduce a release frame</summary>
-      <p>Restore the camera, seed, colors, and held time from the release captures.</p>
-      <label>Release frame<select id="release-frame" disabled></select></label
-      ><button type="button" id="restore-frame" disabled>Restore capture</button>
+      <summary>Example capture presets</summary>
+      <p>
+        Explore repeatable reference looks. These presets are separate from the user-selected
+        release screenshots.
+      </p>
+      <label>Reference look<select id="release-frame" disabled></select></label
+      ><button type="button" id="restore-frame" disabled>Restore preset</button>
     </details>
     <figure id="capture-result" hidden>
       <img
@@ -177,7 +180,7 @@
       iframe = document.querySelector('iframe');
     let api,
       captures = [];
-    fetch('./screenshots.json')
+    fetch('./capture-presets.json')
       .then((response) => response.json())
       .then((data) => {
         captures = data.captures;
