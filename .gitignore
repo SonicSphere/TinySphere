@@ -1,0 +1,16 @@
+dist/
+source-assets.json
+.local/
+node_modules/
+__pycache__/
+*.pyc
+.DS_Store
+.env
+.env.*
+!.env.example
+.openai/
+.gstack/
+src/load-manifest.js
+src/assets/burning-man/installation-performance.json
+src/assets/burning-man/installation.lanes4.bin.gz
+src/assets/burning-man/topography.lanes4.bin.gz

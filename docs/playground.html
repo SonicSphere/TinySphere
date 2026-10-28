@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tiny Sphere · Contributor studio</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font:
+        15px/1.55 system-ui,
+        sans-serif;
+      background: #101315;
+      color: #e9ece7;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+    }
+    header {
+      padding: 25px 4vw;
+      border-bottom: 1px solid #303632;
+      display: flex;
+      gap: 30px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    h1 {
+      font:
+        400 27px Georgia,
+        serif;
+      margin: 0;
+    }
+    a {
+      color: #c8e6d8;
+    }
+    main {
+      padding: 26px 4vw;
+    }
+    form {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      align-items: end;
+      margin-bottom: 22px;
+    }
+    label {
+      display: grid;
+      gap: 5px;
+      font-size: 12px;
+      color: #b4c2ba;
+    }
+    select,
+    input,
+    button {
+      font: inherit;
+      border: 1px solid #435249;
+      background: #1b231e;
+      color: #eff8f0;
+      border-radius: 5px;
+      padding: 9px 12px;
+    }
+    input {
+      width: 92px;
+    }
+    button {
+      cursor: pointer;
+      background: #d5e8da;
+      color: #18231b;
+      border-color: #d5e8da;
+    }
+    button.secondary {
+      background: transparent;
+      color: #d5e8da;
+    }
+    #preview {
+      width: 100%;
+      height: 600px;
+      overflow: hidden;
+      border: 1px solid #39443d;
+      background: #000;
+    }
+    iframe {
+      display: block;
+      border: 0;
+      width: 1920px;
+      height: 1080px;
+      transform-origin: top left;
+    }
+    output {
+      display: block;
+      margin: 18px 0;
+      color: #c2d5c8;
+    }
+    details {
+      margin: 20px 0;
+    }
+    pre {
+      white-space: pre-wrap;
+      font-size: 12px;
+      color: #acbfb0;
+    }
+    p {
+      max-width: 850px;
+    }
+    footer {
+      margin-top: 25px;
+      color: #a3b6aa;
+      font-size: 13px;
+    }
+  </style>
+  <header>
+    <h1>
+      ⭕ Tiny Sphere <span style="font: 13px system-ui; color: #a8b8ad">/ Contributor studio</span>
+    </h1>
+    <a href="release.html">Release introduction ↗</a>
+  </header>
+  <main>
+    <p>
+      Audition a registered light show or theme, explore the camera, and export a real frame. This
+      page is a local development tool; it is excluded from the app build.
+    </p>
+    <form id="controls">
+      <label>Theme<select id="theme" disabled></select></label
+      ><button id="apply-theme" disabled>Apply theme</button>
+      <label>Light show<select id="show" disabled></select></label
+      ><button id="apply-show" class="secondary" type="button" disabled>Apply show</button>
+      <label
+        >Camera<select id="camera">
+          <option value="exterior">Exterior</option>
+          <option value="interior">Interior</option>
+          <option value="detail">Detail</option>
+        </select></label
+      >
+      <label
+        >Time (seconds)<input id="time" type="number" value="24" min="0" max="1000000" step="0.1"
+      /></label>
+      <button id="frame" type="button" class="secondary" disabled>Hold frame</button
+      ><button id="resume" type="button" class="secondary" disabled>Resume</button>
+      <button id="export" type="button" disabled>Export PNG</button>
+    </form>
+    <div id="preview">
+      <iframe
+        title="Live Tiny Sphere preview"
+        src="../dist/?qa=contributor-studio"
+        allow="autoplay"
+      ></iframe>
+    </div>
+    <output id="status" role="status">Loading the sphere…</output>
+    <details>
+      <summary>Current settings</summary>
+      <pre id="state"></pre>
+    </details>
+    <details>
+      <summary>Reproduce a release frame</summary>
+      <p>Restore the camera, seed, colors, and held time from the release captures.</p>
+      <label>Release frame<select id="release-frame" disabled></select></label
+      ><button type="button" id="restore-frame" disabled>Restore capture</button>
+    </details>
+    <figure id="capture-result" hidden>
+      <img
+        id="capture-preview"
+        alt="Exported frame from the live Tiny Sphere canvas"
+        style="display: block; width: 100%; height: auto"
+      />
+      <figcaption><a id="download-image">Save this PNG</a></figcaption>
+    </figure>
+    <footer>
+      Canvas exports contain the live scene without interface controls. Use the saved settings to
+      reproduce a frame. Credit the Sonic Sphere Collective and Rolfe Kent when sharing images from
+      this bundled experience.
+    </footer>
+  </main>
+  <script type="module">
+    const $ = (id) => document.getElementById(id),
+      iframe = document.querySelector('iframe');
+    let api,
+      captures = [];
+    fetch('./screenshots.json')
+      .then((response) => response.json())
+      .then((data) => {
+        captures = data.captures;
+        for (const [index, capture] of captures.entries())
+          $('release-frame').add(new Option(capture.label, index));
+      })
+      .catch(() => {
+        $('release-frame').closest('details').hidden = true;
+      });
+    function fit() {
+      iframe.style.width = '1280px';
+      iframe.style.height = '720px';
+      const scale = $('preview').clientWidth / 1280;
+      iframe.style.transform = `scale(${scale})`;
+      $('preview').style.height = `${720 * scale}px`;
+    }
+    new ResizeObserver(fit).observe($('preview'));
+    function camera() {
+      const pose = {
+        exterior: { distance: 36, elevation: 0.12, azimuth: -0.9 },
+        interior: { distance: 0, elevation: -0.38, azimuth: -0.9 },
+        detail: { distance: 19, elevation: 0.12, azimuth: -0.9 },
+      }[$('camera').value];
+      api.setState({ ...pose, orbit: false });
+    }
+    function report(message) {
+      $('status').textContent = message;
+      $('state').textContent = JSON.stringify(api.getState(), null, 2);
+    }
+    async function settled() {
+      while (api.wipeStatus().active || api.wipeStatus().queued)
+        await new Promise(requestAnimationFrame);
+    }
+    const ready = setInterval(() => {
+      api = iframe.contentWindow?.sphereStudio;
+      if (!api) return;
+      clearInterval(ready);
+      for (const [id, item] of Object.entries(api.listThemes()))
+        $('theme').add(new Option(item.name, id));
+      for (const [id, item] of Object.entries(api.listLooks()))
+        $('show').add(new Option(item.name, id));
+      $('show').value = api.getState().look;
+      for (const control of document.querySelectorAll('[disabled]')) control.disabled = false;
+      camera();
+      report('Ready · choose a theme or light show.');
+    }, 100);
+    $('controls').onsubmit = async (event) => {
+      event.preventDefault();
+      api.applyTheme($('theme').value);
+      await settled();
+      $('show').value = api.getState().look;
+      report(`Theme: ${$('theme').selectedOptions[0].text}`);
+    };
+    $('apply-show').onclick = async () => {
+      api.setLook($('show').value);
+      await settled();
+      report(`Show: ${$('show').selectedOptions[0].text}`);
+    };
+    $('camera').onchange = () => {
+      camera();
+      report('Camera updated.');
+    };
+    $('frame').onclick = () => {
+      api.pauseDefaultMusic();
+      api.seek(Number($('time').value));
+      report(`Held at ${$('time').value} seconds.`);
+    };
+    $('resume').onclick = () => {
+      api.play();
+      report('Visuals playing. Use the player inside the preview to start music.');
+    };
+    $('restore-frame').onclick = async () => {
+      const capture = captures[Number($('release-frame').value)];
+      if (!capture) return;
+      api.pauseDefaultMusic();
+      api.setState(capture.state);
+      await settled();
+      api.seek(capture.state.flowTime);
+      $('time').value = capture.state.flowTime;
+      $('show').value = api.getState().look;
+      report(`Restored: ${capture.label}`);
+    };
+    $('export').onclick = async () => {
+      await settled();
+      const data = api.capture();
+      $('capture-preview').src = data;
+      $('download-image').download = `tiny-sphere-${api.getState().look}.png`;
+      $('download-image').href = data;
+      $('capture-result').hidden = false;
+      report('PNG ready below · save the image or keep exploring.');
+    };
+  </script>
+</html>

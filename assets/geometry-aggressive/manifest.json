@@ -1,0 +1,111 @@
+{
+  "preset": "aggressive",
+  "accepted": "2026-10-28",
+  "source": "BM-GeometryLab",
+  "sourceManifestSha256": "cf0fcf55a5d1b82e117955ef2036340630dc4e5124b0244c7b050ea350b864c7",
+  "cloth": {
+    "attributes": {
+      "position": {
+        "offset": 0,
+        "count": 296049,
+        "itemSize": 3
+      },
+      "normal": {
+        "offset": 1184196,
+        "count": 296049,
+        "itemSize": 3
+      },
+      "contactUV": {
+        "offset": 2368392,
+        "count": 197366,
+        "itemSize": 2
+      },
+      "wrapMask": {
+        "offset": 3157856,
+        "count": 98683,
+        "itemSize": 1
+      },
+      "fixtureId": {
+        "offset": 3552588,
+        "count": 98683,
+        "itemSize": 1
+      }
+    },
+    "userData": {},
+    "index": {
+      "offset": 3947320,
+      "count": 368712
+    },
+    "bytes": 5422168,
+    "sha256": "f49cd0d69a1880bd161112d7b04abc0df58f2047384b1d21f76f2c1a56334420",
+    "packedBytes": 3074820,
+    "path": "cloth-aggressive.bin.gz",
+    "label": "Aggressive",
+    "vertices": 98683,
+    "triangles": 122904,
+    "targetTriangles": 123000,
+    "fixtures": 212,
+    "centersRetained": 212,
+    "sourceAttributesExact": true,
+    "protectOutlineAndSleeves": false,
+    "protectedVertices": 5132,
+    "maxCombinedSimplifierError": 0.0024706684052944183
+  },
+  "terrain": {
+    "attributes": {
+      "position": {
+        "offset": 0,
+        "count": 115143,
+        "itemSize": 3
+      },
+      "normal": {
+        "offset": 460572,
+        "count": 115143,
+        "itemSize": 3
+      },
+      "ridgeField": {
+        "offset": 921144,
+        "count": 76762,
+        "itemSize": 2
+      }
+    },
+    "userData": {
+      "radiusMiles": 20,
+      "radiusMetres": 32186.88,
+      "triangles": 75000,
+      "vertexCount": 38381,
+      "sampleSpacingMetres": 125.73,
+      "elevationRangeMetres": [
+        -16.4068603515625,
+        1534.8153076171875
+      ],
+      "verticalExaggeration": 1,
+      "earthCurvature": true,
+      "localClearRadiusMetres": 250,
+      "ridgePreparationMs": 46.5029999999997,
+      "simplified": true,
+      "skylineBinsLocked": 1440
+    },
+    "index": {
+      "offset": 1228192,
+      "count": 225000
+    },
+    "bytes": 2128192,
+    "sha256": "70b30e37c7894cea3265582ed78cf8ca656dc98ee95b69ed2ab50b9ee012d735",
+    "packedBytes": 1220271,
+    "path": "terrain-aggressive.bin.gz",
+    "label": "Aggressive",
+    "triangles": 75000,
+    "vertices": 38381,
+    "targetTriangles": 75000,
+    "combinedError": 0.0001398463937221095,
+    "skylineVerticesLocked": 1440,
+    "attributesRetained": true
+  },
+  "lights": {
+    "segments": 8,
+    "steps": 60,
+    "chips": "quad"
+  },
+  "notes": "Jeremy visually accepted Aggressive and requested inclusion in this performance update. More extreme variants and adaptive restoration are excluded."
+}

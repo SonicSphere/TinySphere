@@ -1,0 +1,7 @@
+src/vendor/
+src/assets/
+src/load-manifest.js
+tests/fixtures/
+dist/
+source-assets.json
+.local/

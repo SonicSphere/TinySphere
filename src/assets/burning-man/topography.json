@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "source": "USGS 3DEP bare-earth elevation service",
+  "source_url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer",
+  "service_description": "The USGS 3D Elevation Program (3DEP) Bare Earth DEM Dynamic service is based on multi-resolution USGS DEM sources and provides dynamic functions for visualization. These functions include: Hillshade, Aspect Map, Hillshade Stretched, Multi-directional Hillshade, Slope Map, Elevation Tinted Hillshade, Contour. In addition the OGC Web Map Service (WMS) and Web Coverage Service (WCS) interfaces are enabled. Data available in this map service reflects all 3DEP DEM data published as of September 28, 2026.",
+  "retrieved_utc": "2026-10-23T15:09:13.218543+00:00",
+  "origin": {
+    "region": "Black Rock Desert, Nevada",
+    "crs": "EPSG:32611",
+    "placement": "Contextual terrain around the installation. Exact sphere offset and source model compass orientation are unmeasured."
+  },
+  "grid": {
+    "columns": 1025,
+    "rows": 1025,
+    "spacing_metres": 62.865,
+    "west_offset_metres": -32186.88,
+    "north_offset_metres": 32186.88,
+    "row_order": "north to south",
+    "encoding": "little-endian float32 metres",
+    "height_datum": "Source orthometric DEM elevation; render offsets subtract center elevation.",
+    "origin_elevation_metres": 1190.5885009765625,
+    "vertical_exaggeration": 1,
+    "sha256_uncompressed": "183b68d78bfcb68ff04c8200160e581d5be265efdb3006dad6aa4f4a0c9fd690",
+    "sha256_gzip": "2ffe05ef3e6fd23324efec89f34623d8bd23e316fdfeaf19a21171fb9af6ca74"
+  },
+  "coverage": {
+    "2.5": {
+      "radius_metres": 4023.36,
+      "minimum_relative_elevation_m": -0.0765380859375,
+      "maximum_relative_elevation_m": 41.64501953125,
+      "height_range_m": 41.7215576171875
+    },
+    "10": {
+      "radius_metres": 16093.44,
+      "minimum_relative_elevation_m": -0.6478271484375,
+      "maximum_relative_elevation_m": 739.2467041015625,
+      "height_range_m": 739.89453125
+    },
+    "20": {
+      "radius_metres": 32186.88,
+      "minimum_relative_elevation_m": -16.4149169921875,
+      "maximum_relative_elevation_m": 1539.5260009765625,
+      "height_range_m": 1555.94091796875
+    }
+  },
+  "nearest_100m_relief_metres": 4614.907618200501,
+  "render": {
+    "axes": "+X UTM grid east; +Y UTM grid north; +Z up",
+    "earth_radius_metres": 6371008.8,
+    "local_clear_radius_metres": 250,
+    "lighting": "Unlit black terrain silhouette; adds no light. Flat ground inside 250 m is preserved."
+  },
+  "source_dem_sha256": "dacfe25d8428d94c2fdbb4299e62a3167e2494d76553293828b44eae4fc6b784",
+  "source_units": "metres",
+  "license": "USGS public-domain data",
+  "notes": [
+    "Export grid spacing is not a claim of native lidar resolution.",
+    "No vertical exaggeration. Source terrain resampled for browser display.",
+    "Terrain view is contextual, not a surveyed installation placement."
+  ]
+}

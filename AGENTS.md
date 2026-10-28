@@ -1,0 +1,12 @@
+# Tiny Sphere contributor source
+
+- Permanent local app URL: **http://127.0.0.1:4192/TinySphere/dist/**. Contributor studio: **http://127.0.0.1:4192/TinySphere/docs/playground.html**. Release introduction: **http://127.0.0.1:4192/TinySphere/docs/release.html**. Keep port 4192 strict; report a conflict instead of selecting another port.
+- Use Node.js 22+ and Python 3.9+. `npm run check` builds, runs portable tests, and checks distribution integrity. No package installation is required. `npm run dev` builds and serves the project. Rebuild after source edits; the server has no file watcher.
+- Source lives in `src/`; generated `dist/`, `src/load-manifest.js`, and prepared runtime geometry are ignored by Git. Do not edit generated files manually.
+- Add light shows under `src/shows/` and theme presets under `src/themes/`, then register them explicitly. Follow `CONTRIBUTING.md` and the two authoring guides. Keep shows deterministic, DOM-free, and independent of the camera/audio lifecycle.
+- Keep one scene, animation loop, music connection, permanent control bar, and shared appearance wipe. Preserve the selected arrival state and existing saved-view/API compatibility unless a task explicitly changes them.
+- Preserve the approved model: 212 fixture centers, 672 geodesic tubes, 15 wooden members, and 215 hardware instances. The rendered Aggressive cloth/terrain mesh inputs are selected; do not introduce an adaptive or more extreme geometry variant as an incidental change. Preserve the matte white wraps, modeled LED sampling, selected photo-guided v2 floor, interior camera freedom, and dolly leveling.
+- Keep Three.js/Lucide licenses, creator credits, asset hashes, and provenance. The original-code release license is intentionally undecided; do not assign one without maintainer direction. Model/music release permissions are separate.
+- Screenshots must come from the actual app. Keep saved state with release captures; do not pass generated illustrations off as screenshots. Browser automation is separate from human listening and physical-device acceptance.
+- This is a standalone source preparation. Do not overwrite the existing viewer or historical experiments, publish a Site, push GitHub, recreate native authoring work, or synchronize Google Drive as part of routine source edits.
+- Deliver reports in HTML. Do not produce a PDF unless explicitly requested.

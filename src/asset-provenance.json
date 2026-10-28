@@ -1,0 +1,173 @@
+{
+  "playa": {
+    "asset": "Photo-guided procedural Black Rock playa",
+    "revision": "photo-guided-v2-seed19",
+    "source": "Original procedural generator in BM-PlayaStudy/playa.js",
+    "generation": "1024 square RGBA8 map baked once; no runtime crack generation",
+    "reference_photographs": "Photographs guided colour and surface structure only; no photo pixels are included.",
+    "reference_url": "https://www.adventureguyphoto.com/adventure-guy-chris-miele-photography-blog/2015/9/13/burning-man-the-longest-and-most-important-road-home-yet",
+    "tile_metres": [
+      6,
+      6
+    ],
+    "channels": "R linear albedo, GB normal XY, A micro-height",
+    "file": "data/burning-man/playa-photo-v2.rgba.gz",
+    "sha256": "1cdb703c81357b0c2d43b3ebd9201ac5fbd147bbf30c37fab2837703a3d637c9",
+    "limits": "An artistic surface approximation, not a site scan or displaced ground geometry."
+  },
+  "wood": {
+    "id": "fine_grained_wood",
+    "name": "Fine Grained Wood",
+    "source_url": "https://polyhaven.com/a/fine_grained_wood",
+    "license": "CC0-1.0",
+    "license_url": "https://polyhaven.com/license",
+    "authors": {
+      "Rob Tuytel": "All"
+    },
+    "source_dimensions_mm": [
+      600.0000238418579,
+      600.0000238418579
+    ],
+    "files": [
+      {
+        "role": "color",
+        "relative_cache_path": "fine_grained_wood/fine_grained_wood_col_2k.jpg",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/fine_grained_wood/fine_grained_wood_col_2k.jpg",
+        "expected_md5": "cfbfbf2cc0e0633af9b959a0e6e17182",
+        "size": 1327517,
+        "sha256": "d97b1ab2c5206ac43bc0c42f21878da14f4d02497fd21396399406c03f3755a9",
+        "md5": "cfbfbf2cc0e0633af9b959a0e6e17182"
+      },
+      {
+        "role": "roughness",
+        "relative_cache_path": "fine_grained_wood/fine_grained_wood_rough_2k.jpg",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/fine_grained_wood/fine_grained_wood_rough_2k.jpg",
+        "expected_md5": "1356433f66fe066762c1be121f76738d",
+        "size": 871792,
+        "sha256": "7e8f5fc146ae7accd3b9deb2a173c1cf253707ccdee5070ce16cefd4ee68f1b7",
+        "md5": "1356433f66fe066762c1be121f76738d"
+      },
+      {
+        "role": "normal",
+        "relative_cache_path": "fine_grained_wood/fine_grained_wood_nor_gl_2k.jpg",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/fine_grained_wood/fine_grained_wood_nor_gl_2k.jpg",
+        "expected_md5": "24423b733087ca4cefe5833d131a1f62",
+        "size": 855682,
+        "sha256": "c76fcd29434978227db5a35b5b0238da1bee0fb5fa8cdfc6819a76c7ef723f3c",
+        "md5": "24423b733087ca4cefe5833d131a1f62"
+      }
+    ]
+  },
+  "geometry": "Burning Man uses the approved B cloths on the truss-free frame: all 212 original cloth centers, 672 geodesic tubes, 15 wooden tripod members and 215 cap/connection instances retained. Tapered spandex arms end in flat pipe sleeves. Internal aluminum trusses remain removed.",
+  "terrain": {
+    "source": "USGS 3DEP",
+    "source_url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer",
+    "license": "USGS public-domain data",
+    "notes": [
+      "Export grid spacing is not a claim of native lidar resolution.",
+      "No vertical exaggeration. Source terrain resampled for browser display.",
+      "Terrain view is contextual, not a surveyed installation placement."
+    ]
+  },
+  "burning_man_model": {
+    "revision": "bm-sphere-cloth-b-2026-10-27",
+    "status": "active",
+    "approved_date": "2026-10-27",
+    "deprecated_predecessor": "BM sphere with internal aluminum trusses",
+    "deprecated_note": "The previous model with internal aluminum truss towers and ring is deprecated and must not be used for new work.",
+    "cloth_design": "B \u00b7 Closer wraps",
+    "retained_frame_revision": "bm-sphere-no-internal-truss-2026-10-27",
+    "cloth_centers_preserved": true,
+    "selected_geometry_preserved": true
+  },
+  "default_music": {
+    "title": "Tree Voices",
+    "artist": "Rolfe Kent",
+    "asset": "audio/tree-voices-stereo.mp3",
+    "source": "User-provided Tree Voices FEY August 22 multichannel recording",
+    "source_channels": 30,
+    "output_channels": 2,
+    "sample_rate": 48000,
+    "codec": "MP3",
+    "bitrate": 320000,
+    "duration_seconds": 285.2418333333333,
+    "fold": "Channels 1,3,...29 equally to left; 2,4,...30 equally to right; each channel gain 1/15.",
+    "constant_gain_db": 9.5,
+    "sha256": "dc3d494eda8ac349f9d0941b8edfd621962556ac37bf72b8a9d0c8c182c6e4dc",
+    "bytes": 11412644
+  },
+  "tube_lighting": {
+    "model_revision": "bm-sphere-no-internal-truss-2026-10-27",
+    "fixture_fit": "data/burning-man/tube-fixtures.json",
+    "source": "Approved local HistoricalLighting assembly experiment, 27 October 2026",
+    "fixtures": 212,
+    "leds_per_fixture": 120,
+    "radial_artwork_samples": 21,
+    "physical_columns": 20,
+    "turns": 6,
+    "mapping": "Per-fixture source cloth axes; cyclic interpolation of shared artwork texture; no center/PCB sample on early tubes",
+    "limits": "Winding, chip pitch, mounting foot and tube dimensions are illustrative, with length fitted beneath the original cloth. Display halos and LED gain are artistic, not calibrated photometry.",
+    "environment_emission": {
+      "source": "Same 25,440 LED chip records as the visible tubes: chip positions, facing normals and angular colors.",
+      "light_groups": 16,
+      "cloth_center_sample_used": false,
+      "applies_to": [
+        "uncovered",
+        "floatingLights"
+      ],
+      "limits": "Spatial and directional light grouping, brightness and wood bounce are real-time approximations, without individual shadow rays or measured fixture output."
+    }
+  },
+  "wrap_material": {
+    "id": "matte-white-a-2026-10-27",
+    "selection": "A / Matte white",
+    "approved_on": "2026-10-27",
+    "comparison": "BM-WrapStudy",
+    "cloth_geometry_unchanged": true,
+    "sleeves": 1230,
+    "light_field": "Existing 16 groups, shared by reference",
+    "optics": "White diffuse approximation retaining incident colour; no calibrated photometry"
+  },
+  "previous_playa_reference": {
+    "asset": "Mud Cracked Dry 03",
+    "source_url": "https://polyhaven.com/a/mud_cracked_dry_03",
+    "authors": {
+      "Dario Barresi": "Processing",
+      "Dimitrios Savva": "Photography"
+    },
+    "license": "CC0-1.0",
+    "license_url": "https://polyhaven.com/license",
+    "tile_metres": [
+      1.5,
+      1.5
+    ],
+    "treatment": "Pale alkali-clay tint with reduced normal strength on a flat 50 by 50 metre plane. Representative playa appearance; not a Black Rock Desert site scan.",
+    "files": [
+      {
+        "path": "reference/BM-playa/playa-color.jpg",
+        "role": "color",
+        "bytes": 974865,
+        "sha256": "b49e3d76bbb142c30ce938327f42ffdfd465429dd694fb5c2b731de08d7f6310",
+        "md5": "6a86cfde5a73073397fcd13a5b6fed94",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/mud_cracked_dry_03/mud_cracked_dry_03_diff_1k.jpg"
+      },
+      {
+        "path": "reference/BM-playa/playa-normal.jpg",
+        "role": "normal",
+        "bytes": 1292317,
+        "sha256": "f9fc5aa9b9e9c5d67cc77f9f6e95bdddcc6abe97400300603721f1dff4171e69",
+        "md5": "fb1e722403440bb1790f35970645930c",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/mud_cracked_dry_03/mud_cracked_dry_03_nor_gl_1k.jpg"
+      },
+      {
+        "path": "reference/BM-playa/playa-roughness.jpg",
+        "role": "roughness",
+        "bytes": 446706,
+        "sha256": "1974f1d5eab7f00fafa8dad778ceb60829d87d47c92c12cdff75e272ee651362",
+        "md5": "2378d869a389df51d155da2ca0fbeaf2",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/mud_cracked_dry_03/mud_cracked_dry_03_rough_1k.jpg"
+      }
+    ],
+    "playa_reference": "https://survival.burningman.org/survival-health-and-safety/survival/"
+  }
+}

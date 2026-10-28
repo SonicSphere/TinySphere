@@ -1,0 +1,20 @@
+{
+  "name": "tiny-sphere",
+  "version": "1.1.0",
+  "private": true,
+  "description": "A small world of light, color and music, inspired by the Sonic Sphere.",
+  "type": "module",
+  "scripts": {
+    "build": "python3 scripts/build.py",
+    "start": "python3 scripts/serve.py",
+    "dev": "npm run build && npm start",
+    "test": "node --test tests/*.test.mjs && python3 -m unittest discover -s tests -p 'test_*.py'",
+    "check": "npm run build && npm test && node scripts/check-release.mjs",
+    "new:show": "node scripts/new-content.mjs show",
+    "new:theme": "node scripts/new-content.mjs theme",
+    "package:source": "python3 scripts/package-source.py"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
