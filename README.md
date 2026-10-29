@@ -12,6 +12,8 @@ The included music is Rolfe Kent's lovely *Tree Voices*, written specifically fo
 
 I'd like to import our existing light and music shows so they can be replayed here. The code is organized so that others can add new looks, visual themes, and light shows.
 
+Eight [recovered Burning Man patterns](docs/recovered-shows.md) now join the nine original looks in Vibe shift, including Wave, Spinner, Rings, Stars, and Bloom.
+
 I hope you enjoy it.
 
 [Open the simulator](https://sonicsphere.github.io/TinySphere/).

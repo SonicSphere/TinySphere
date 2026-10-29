@@ -1,0 +1,1910 @@
+[
+  {
+    "x": -4.316,
+    "y": -4.316,
+    "z": -4.358,
+    "controller": 3,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -4.022,
+    "y": -2.922,
+    "z": -5.616,
+    "controller": 3,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -4.05,
+    "y": -5.575,
+    "z": -2.96,
+    "controller": 3,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -3.337,
+    "y": -6.549,
+    "z": -1.493,
+    "controller": 3,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -2.318,
+    "y": -7.133,
+    "z": 0.0,
+    "controller": 3,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -5.438,
+    "y": -2.771,
+    "z": -4.358,
+    "controller": 3,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -4.728,
+    "y": -1.536,
+    "z": -5.616,
+    "controller": 3,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -3.329,
+    "y": -1.082,
+    "z": -6.633,
+    "controller": 3,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -5.575,
+    "y": -4.05,
+    "z": -2.96,
+    "controller": 3,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -5.197,
+    "y": -5.197,
+    "z": -1.493,
+    "controller": 3,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -4.408,
+    "y": -6.068,
+    "z": 0.0,
+    "controller": 3,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -6.028,
+    "y": -0.955,
+    "z": -4.358,
+    "controller": 3,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -4.971,
+    "y": 0.0,
+    "z": -5.616,
+    "controller": 3,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -6.554,
+    "y": -2.129,
+    "z": -2.96,
+    "controller": 3,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -6.549,
+    "y": -3.337,
+    "z": -1.493,
+    "controller": 3,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -6.068,
+    "y": -4.408,
+    "z": 0.0,
+    "controller": 3,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -6.028,
+    "y": 0.955,
+    "z": -4.358,
+    "controller": 3,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -4.728,
+    "y": 1.536,
+    "z": -5.616,
+    "controller": 3,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -3.329,
+    "y": 1.082,
+    "z": -6.633,
+    "controller": 3,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -6.891,
+    "y": 0.0,
+    "z": -2.96,
+    "controller": 3,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -7.259,
+    "y": -1.15,
+    "z": -1.493,
+    "controller": 3,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -7.133,
+    "y": -2.318,
+    "z": 0.0,
+    "controller": 3,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -5.438,
+    "y": 2.771,
+    "z": -4.358,
+    "controller": 3,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -4.022,
+    "y": 2.922,
+    "z": -5.616,
+    "controller": 3,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -6.554,
+    "y": 2.129,
+    "z": -2.96,
+    "controller": 3,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -7.259,
+    "y": 1.15,
+    "z": -1.493,
+    "controller": 3,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -7.5,
+    "y": 0.0,
+    "z": 0.0,
+    "controller": 3,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -4.316,
+    "y": 4.316,
+    "z": -4.358,
+    "controller": 3,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -2.922,
+    "y": 4.022,
+    "z": -5.616,
+    "controller": 3,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -2.057,
+    "y": 2.832,
+    "z": -6.633,
+    "controller": 3,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -5.575,
+    "y": 4.05,
+    "z": -2.96,
+    "controller": 3,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -6.549,
+    "y": 3.337,
+    "z": -1.493,
+    "controller": 3,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -7.133,
+    "y": 2.318,
+    "z": 0.0,
+    "controller": 3,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -2.771,
+    "y": 5.438,
+    "z": -4.358,
+    "controller": 3,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -1.536,
+    "y": 4.728,
+    "z": -5.616,
+    "controller": 3,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -4.05,
+    "y": 5.575,
+    "z": -2.96,
+    "controller": 3,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -5.197,
+    "y": 5.197,
+    "z": -1.493,
+    "controller": 3,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -6.068,
+    "y": 4.408,
+    "z": 0.0,
+    "controller": 3,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -0.955,
+    "y": 6.028,
+    "z": -4.358,
+    "controller": 3,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 0.0,
+    "y": 4.971,
+    "z": -5.616,
+    "controller": 3,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 0.0,
+    "y": 3.5,
+    "z": -6.633,
+    "controller": 3,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -2.129,
+    "y": 6.554,
+    "z": -2.96,
+    "controller": 3,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -3.337,
+    "y": 6.549,
+    "z": -1.493,
+    "controller": 3,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -4.408,
+    "y": 6.068,
+    "z": 0.0,
+    "controller": 3,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 0.955,
+    "y": 6.028,
+    "z": -4.358,
+    "controller": 4,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 1.536,
+    "y": 4.728,
+    "z": -5.616,
+    "controller": 4,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 0.0,
+    "y": 6.891,
+    "z": -2.96,
+    "controller": 4,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -1.15,
+    "y": 7.259,
+    "z": -1.493,
+    "controller": 4,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -2.318,
+    "y": 7.133,
+    "z": 0.0,
+    "controller": 4,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 2.771,
+    "y": 5.438,
+    "z": -4.358,
+    "controller": 4,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 2.922,
+    "y": 4.022,
+    "z": -5.616,
+    "controller": 4,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 2.057,
+    "y": 2.832,
+    "z": -6.633,
+    "controller": 4,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 2.129,
+    "y": 6.554,
+    "z": -2.96,
+    "controller": 4,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 1.15,
+    "y": 7.259,
+    "z": -1.493,
+    "controller": 4,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 0.0,
+    "y": 7.5,
+    "z": 0.0,
+    "controller": 4,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 4.316,
+    "y": 4.316,
+    "z": -4.358,
+    "controller": 4,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 4.022,
+    "y": 2.922,
+    "z": -5.616,
+    "controller": 4,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 4.05,
+    "y": 5.575,
+    "z": -2.96,
+    "controller": 4,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 2.318,
+    "y": 7.133,
+    "z": 0.0,
+    "controller": 4,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 3.337,
+    "y": 6.549,
+    "z": -1.493,
+    "controller": 4,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 5.438,
+    "y": 2.771,
+    "z": -4.358,
+    "controller": 4,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 4.728,
+    "y": 1.536,
+    "z": -5.616,
+    "controller": 4,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 3.329,
+    "y": 1.082,
+    "z": -6.633,
+    "controller": 4,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 5.575,
+    "y": 4.05,
+    "z": -2.96,
+    "controller": 4,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 5.197,
+    "y": 5.197,
+    "z": -1.493,
+    "controller": 4,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 4.408,
+    "y": 6.068,
+    "z": 0.0,
+    "controller": 4,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 6.028,
+    "y": 0.955,
+    "z": -4.358,
+    "controller": 4,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 4.971,
+    "y": 0.0,
+    "z": -5.616,
+    "controller": 4,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 6.554,
+    "y": 2.129,
+    "z": -2.96,
+    "controller": 4,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 6.549,
+    "y": 3.337,
+    "z": -1.493,
+    "controller": 4,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 6.068,
+    "y": 4.408,
+    "z": 0.0,
+    "controller": 4,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 6.028,
+    "y": -0.955,
+    "z": -4.358,
+    "controller": 4,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 4.728,
+    "y": -1.536,
+    "z": -5.616,
+    "controller": 4,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 3.329,
+    "y": -1.082,
+    "z": -6.633,
+    "controller": 4,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 6.891,
+    "y": 0.0,
+    "z": -2.96,
+    "controller": 4,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 7.259,
+    "y": 1.15,
+    "z": -1.493,
+    "controller": 4,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 7.133,
+    "y": 2.318,
+    "z": 0.0,
+    "controller": 4,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 5.438,
+    "y": -2.771,
+    "z": -4.358,
+    "controller": 4,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 4.022,
+    "y": -2.922,
+    "z": -5.616,
+    "controller": 4,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 6.554,
+    "y": -2.129,
+    "z": -2.96,
+    "controller": 4,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 7.259,
+    "y": -1.15,
+    "z": -1.493,
+    "controller": 4,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 7.5,
+    "y": 0.0,
+    "z": 0.0,
+    "controller": 4,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 4.316,
+    "y": -4.316,
+    "z": -4.358,
+    "controller": 4,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 2.922,
+    "y": -4.022,
+    "z": -5.616,
+    "controller": 4,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 2.057,
+    "y": -2.832,
+    "z": -6.633,
+    "controller": 4,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 5.575,
+    "y": -4.05,
+    "z": -2.96,
+    "controller": 4,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 6.549,
+    "y": -3.337,
+    "z": -1.493,
+    "controller": 4,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 7.133,
+    "y": -2.318,
+    "z": 0.0,
+    "controller": 4,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 2.771,
+    "y": -5.438,
+    "z": -4.358,
+    "controller": 5,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 1.536,
+    "y": -4.728,
+    "z": -5.616,
+    "controller": 5,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 4.05,
+    "y": -5.575,
+    "z": -2.96,
+    "controller": 5,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 5.197,
+    "y": -5.197,
+    "z": -1.493,
+    "controller": 5,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 6.068,
+    "y": -4.408,
+    "z": 0.0,
+    "controller": 5,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 0.955,
+    "y": -6.028,
+    "z": -4.358,
+    "controller": 5,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 0.0,
+    "y": -4.971,
+    "z": -5.616,
+    "controller": 5,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 0.0,
+    "y": -3.5,
+    "z": -6.633,
+    "controller": 5,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 2.129,
+    "y": -6.554,
+    "z": -2.96,
+    "controller": 5,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 3.337,
+    "y": -6.549,
+    "z": -1.493,
+    "controller": 5,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 4.408,
+    "y": -6.068,
+    "z": 0.0,
+    "controller": 5,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -0.955,
+    "y": -6.028,
+    "z": -4.358,
+    "controller": 5,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -1.536,
+    "y": -4.728,
+    "z": -5.616,
+    "controller": 5,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 0.0,
+    "y": -6.891,
+    "z": -2.96,
+    "controller": 5,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 1.15,
+    "y": -7.259,
+    "z": -1.493,
+    "controller": 5,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 2.318,
+    "y": -7.133,
+    "z": 0.0,
+    "controller": 5,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -2.771,
+    "y": -5.438,
+    "z": -4.358,
+    "controller": 5,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -2.922,
+    "y": -4.022,
+    "z": -5.616,
+    "controller": 5,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -2.057,
+    "y": -2.832,
+    "z": -6.633,
+    "controller": 5,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -2.129,
+    "y": -6.554,
+    "z": -2.96,
+    "controller": 5,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -1.15,
+    "y": -7.259,
+    "z": -1.493,
+    "controller": 5,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 0.0,
+    "y": -7.5,
+    "z": 0.0,
+    "controller": 5,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 1.176,
+    "y": -1.618,
+    "z": -7.228,
+    "controller": 5,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 1.902,
+    "y": 0.618,
+    "z": -7.228,
+    "controller": 5,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 0.0,
+    "y": 2.0,
+    "z": -7.228,
+    "controller": 5,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -1.176,
+    "y": -1.618,
+    "z": -7.228,
+    "controller": 5,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -1.902,
+    "y": 0.618,
+    "z": -7.228,
+    "controller": 5,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 0.0,
+    "y": 0.0,
+    "z": -7.5,
+    "controller": 5,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 0.955,
+    "y": -6.028,
+    "z": 4.358,
+    "controller": 0,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 0.0,
+    "y": -6.891,
+    "z": 2.96,
+    "controller": 0,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -1.15,
+    "y": -7.259,
+    "z": 1.493,
+    "controller": 0,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 1.536,
+    "y": -4.728,
+    "z": 5.616,
+    "controller": 0,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 2.057,
+    "y": -2.832,
+    "z": 6.633,
+    "controller": 0,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 1.176,
+    "y": -1.618,
+    "z": 7.228,
+    "controller": 0,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -0.955,
+    "y": -6.028,
+    "z": 4.358,
+    "controller": 0,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -2.129,
+    "y": -6.554,
+    "z": 2.96,
+    "controller": 0,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -3.337,
+    "y": -6.549,
+    "z": 1.493,
+    "controller": 0,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 0.0,
+    "y": -4.971,
+    "z": 5.616,
+    "controller": 0,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -2.771,
+    "y": -5.438,
+    "z": 4.358,
+    "controller": 0,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -4.05,
+    "y": -5.575,
+    "z": 2.96,
+    "controller": 0,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -5.197,
+    "y": -5.197,
+    "z": 1.493,
+    "controller": 0,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -1.536,
+    "y": -4.728,
+    "z": 5.616,
+    "controller": 0,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 0.0,
+    "y": -3.5,
+    "z": 6.633,
+    "controller": 0,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -4.316,
+    "y": -4.316,
+    "z": 4.358,
+    "controller": 0,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -5.575,
+    "y": -4.05,
+    "z": 2.96,
+    "controller": 0,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -6.549,
+    "y": -3.337,
+    "z": 1.493,
+    "controller": 0,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -2.922,
+    "y": -4.022,
+    "z": 5.616,
+    "controller": 0,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -5.438,
+    "y": -2.771,
+    "z": 4.358,
+    "controller": 0,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -6.554,
+    "y": -2.129,
+    "z": 2.96,
+    "controller": 0,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -7.259,
+    "y": -1.15,
+    "z": 1.493,
+    "controller": 0,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -4.022,
+    "y": -2.922,
+    "z": 5.616,
+    "controller": 0,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -2.057,
+    "y": -2.832,
+    "z": 6.633,
+    "controller": 0,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -1.176,
+    "y": -1.618,
+    "z": 7.228,
+    "controller": 0,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -6.028,
+    "y": -0.955,
+    "z": 4.358,
+    "controller": 0,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -6.891,
+    "y": 0.0,
+    "z": 2.96,
+    "controller": 0,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -7.259,
+    "y": 1.15,
+    "z": 1.493,
+    "controller": 0,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -4.728,
+    "y": -1.536,
+    "z": 5.616,
+    "controller": 0,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -6.028,
+    "y": 0.955,
+    "z": 4.358,
+    "controller": 0,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -6.554,
+    "y": 2.129,
+    "z": 2.96,
+    "controller": 0,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -6.549,
+    "y": 3.337,
+    "z": 1.493,
+    "controller": 0,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -4.971,
+    "y": 0.0,
+    "z": 5.616,
+    "controller": 0,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -3.329,
+    "y": -1.082,
+    "z": 6.633,
+    "controller": 0,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -5.438,
+    "y": 2.771,
+    "z": 4.358,
+    "controller": 0,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -5.575,
+    "y": 4.05,
+    "z": 2.96,
+    "controller": 0,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -5.197,
+    "y": 5.197,
+    "z": 1.493,
+    "controller": 0,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -4.728,
+    "y": 1.536,
+    "z": 5.616,
+    "controller": 0,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -4.316,
+    "y": 4.316,
+    "z": 4.358,
+    "controller": 1,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -4.05,
+    "y": 5.575,
+    "z": 2.96,
+    "controller": 1,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -3.337,
+    "y": 6.549,
+    "z": 1.493,
+    "controller": 1,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -4.022,
+    "y": 2.922,
+    "z": 5.616,
+    "controller": 1,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -3.329,
+    "y": 1.082,
+    "z": 6.633,
+    "controller": 1,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -1.902,
+    "y": 0.618,
+    "z": 7.228,
+    "controller": 1,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -2.771,
+    "y": 5.438,
+    "z": 4.358,
+    "controller": 1,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -2.129,
+    "y": 6.554,
+    "z": 2.96,
+    "controller": 1,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -1.15,
+    "y": 7.259,
+    "z": 1.493,
+    "controller": 1,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -2.922,
+    "y": 4.022,
+    "z": 5.616,
+    "controller": 1,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -0.955,
+    "y": 6.028,
+    "z": 4.358,
+    "controller": 1,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 0.0,
+    "y": 6.891,
+    "z": 2.96,
+    "controller": 1,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 1.15,
+    "y": 7.259,
+    "z": 1.493,
+    "controller": 1,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -1.536,
+    "y": 4.728,
+    "z": 5.616,
+    "controller": 1,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 0.955,
+    "y": 6.028,
+    "z": 4.358,
+    "controller": 1,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 2.129,
+    "y": 6.554,
+    "z": 2.96,
+    "controller": 1,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 3.337,
+    "y": 6.549,
+    "z": 1.493,
+    "controller": 1,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 0.0,
+    "y": 4.971,
+    "z": 5.616,
+    "controller": 1,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": -2.057,
+    "y": 2.832,
+    "z": 6.633,
+    "controller": 1,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 7.5,
+    "controller": 1,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 2.771,
+    "y": 5.438,
+    "z": 4.358,
+    "controller": 1,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 4.05,
+    "y": 5.575,
+    "z": 2.96,
+    "controller": 1,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 5.197,
+    "y": 5.197,
+    "z": 1.493,
+    "controller": 1,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 1.536,
+    "y": 4.728,
+    "z": 5.616,
+    "controller": 1,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 0.0,
+    "y": 3.5,
+    "z": 6.633,
+    "controller": 1,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 0.0,
+    "y": 2.0,
+    "z": 7.228,
+    "controller": 1,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 4.316,
+    "y": 4.316,
+    "z": 4.358,
+    "controller": 1,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 5.575,
+    "y": 4.05,
+    "z": 2.96,
+    "controller": 1,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 6.549,
+    "y": 3.337,
+    "z": 1.493,
+    "controller": 1,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 2.922,
+    "y": 4.022,
+    "z": 5.616,
+    "controller": 1,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 5.438,
+    "y": 2.771,
+    "z": 4.358,
+    "controller": 1,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 6.554,
+    "y": 2.129,
+    "z": 2.96,
+    "controller": 1,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 7.259,
+    "y": 1.15,
+    "z": 1.493,
+    "controller": 1,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 4.022,
+    "y": 2.922,
+    "z": 5.616,
+    "controller": 1,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 2.057,
+    "y": 2.832,
+    "z": 6.633,
+    "controller": 1,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 6.028,
+    "y": 0.955,
+    "z": 4.358,
+    "controller": 1,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 6.891,
+    "y": 0.0,
+    "z": 2.96,
+    "controller": 1,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 7.259,
+    "y": -1.15,
+    "z": 1.493,
+    "controller": 1,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 4.728,
+    "y": 1.536,
+    "z": 5.616,
+    "controller": 1,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 6.028,
+    "y": -0.955,
+    "z": 4.358,
+    "controller": 2,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 6.554,
+    "y": -2.129,
+    "z": 2.96,
+    "controller": 2,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 6.549,
+    "y": -3.337,
+    "z": 1.493,
+    "controller": 2,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 4.971,
+    "y": 0.0,
+    "z": 5.616,
+    "controller": 2,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 3.329,
+    "y": 1.082,
+    "z": 6.633,
+    "controller": 2,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 1.902,
+    "y": 0.618,
+    "z": 7.228,
+    "controller": 2,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 5.438,
+    "y": -2.771,
+    "z": 4.358,
+    "controller": 2,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 5.575,
+    "y": -4.05,
+    "z": 2.96,
+    "controller": 2,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 5.197,
+    "y": -5.197,
+    "z": 1.493,
+    "controller": 2,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 4.728,
+    "y": -1.536,
+    "z": 5.616,
+    "controller": 2,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 4.316,
+    "y": -4.316,
+    "z": 4.358,
+    "controller": 2,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 4.05,
+    "y": -5.575,
+    "z": 2.96,
+    "controller": 2,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 3.337,
+    "y": -6.549,
+    "z": 1.493,
+    "controller": 2,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 4.022,
+    "y": -2.922,
+    "z": 5.616,
+    "controller": 2,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 3.329,
+    "y": -1.082,
+    "z": 6.633,
+    "controller": 2,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 2.771,
+    "y": -5.438,
+    "z": 4.358,
+    "controller": 2,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 2.129,
+    "y": -6.554,
+    "z": 2.96,
+    "controller": 2,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 1.15,
+    "y": -7.259,
+    "z": 1.493,
+    "controller": 2,
+    "reversed": false,
+    "rotation": 0.0,
+    "offset": 0
+  },
+  {
+    "x": 2.922,
+    "y": -4.022,
+    "z": 5.616,
+    "controller": 2,
+    "reversed": true,
+    "rotation": 0.0,
+    "offset": 0
+  }
+]

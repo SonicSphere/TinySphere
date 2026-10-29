@@ -25,7 +25,7 @@ import {
 } from './ui/loading.js';
 import * as THREE from './vendor/three.module.js';
 import {
-  renderArtwork,
+  renderArtwork as renderStudioArtwork,
   prepareArtworkPoints,
   LOOKS,
   LOOK_INFO,
@@ -49,8 +49,19 @@ import { repairHardwareNormals, createHardwareContactMaterial } from './engine/h
 import { ARRIVAL_DEFAULTS } from './settings/arrival-defaults.js';
 import { LookWipe } from './engine/look-wipe.js';
 import { SHOWS } from './shows/index.js';
+import { loadRecoveredShows } from './shows/recovered/index.js';
+import { createClothDiffusion, DIFFUSION_GLSL } from './engine/cloth-diffusion.js';
 import { THEMES, themeState } from './themes/index.js';
 import { createDesktopTools } from './ui/desktop-tools.js';
+
+const fieldRevisions = new WeakMap();
+function renderArtwork(points, seconds, state, out, music = null) {
+  // A saved source clock may be far ahead. Replay a bounded chunk each frame
+  // rather than blocking the camera, audio, or UI while rebuilding its history.
+  const result = renderStudioArtwork(points, seconds, state, out, music, { maxSteps: 12 });
+  fieldRevisions.set(out, (fieldRevisions.get(out) ?? 0) + 1);
+  return result;
+}
 
 const $ = (id) => document.getElementById(id),
   qaKey = new URLSearchParams(location.search).get('qa'),
@@ -75,6 +86,7 @@ const limits = {
   wildness: [0, 1],
   seed: [1, 2147483646],
   flowTime: [0, 1e9],
+  showTime: [0, 1e9],
   washTime: [0, 1e9],
   flashTime: [0, 1e9],
   realTime: [0, 1e9],
@@ -140,7 +152,7 @@ try {
 } catch {}
 // Every normal arrival restores the complete approved appearance, including
 // camera and animation phase. Earlier browser preferences cannot override it.
-const state = { ...defaults, lensFov: 180, ...linked, venue: 'burning-man', terrainRadius: 20 };
+const state = { ...defaults, lensFov: 180, showTime: 0, ...linked, venue: 'burning-man', terrainRadius: 20 };
 // Nashville views refer to another model and cannot supply a camera here.
 if (Object.keys(linked).length && linkedVenue !== 'burning-man') {
   for (const key of ['distance', 'elevation', 'azimuth']) state[key] = defaults[key];
@@ -295,6 +307,7 @@ let renderer,
   revision = null;
 let environment,
   hardwareNormalRepairs = 0;
+let clothDiffusion = null;
 let lookWipe = null,
   queuedLook = null,
   sourcePixels = null;
@@ -337,6 +350,8 @@ const vertex = `attribute vec2 contactUV; attribute float fixtureId;
 varying vec2 vUV; varying float vId; varying vec3 vFabricNormal;
 void main(){vFabricNormal=normalize(mat3(modelMatrix)*mat3(instanceMatrix)*normal);vUV=contactUV;vId=fixtureId;vec4 p=instanceMatrix*vec4(position,1.);gl_Position=projectionMatrix*modelViewMatrix*p;}`;
 const fragment = `uniform sampler2D artwork;uniform float fixtureCount;uniform float brightness;uniform float softness;uniform float edgeFade;uniform float daylight;uniform float artVisibility;
+uniform float clothDiffusionEnabled;
+${DIFFUSION_GLSL}
 varying vec2 vUV;varying float vId;varying vec3 vFabricNormal;
 vec3 radialLight(float a,float y){
  a=mod(mod(a,21.)+21.,21.);float i=floor(a),f=fract(a);
@@ -353,6 +368,7 @@ void main(){
  vec3 light=radialLight(a,y)*.2270270270;
  light+=(radialLight(a+1.3846153846*spread,y)+radialLight(a-1.3846153846*spread,y))*.3162162162;
  light+=(radialLight(a+3.2307692308*spread,y)+radialLight(a-3.2307692308*spread,y))*.0702702703;
+ if(clothDiffusionEnabled>.5)light=transmittedClothLight(a,vId,radius);
  float contact=smoothstep(.064,.0864,radius);
  float halo=contact/pow(1.+pow(radius/.38,2.),1.25);
  // Hold the glow near the hub, then let it die away toward the fabric tips.
@@ -417,7 +433,7 @@ function setState(next) {
   const update = validated(next);
   delete update.venue;
   if (Object.keys(update).some((key) => appearanceKeys.has(key) ||
-      ['flowTime', 'washTime', 'flashTime', 'realTime'].includes(key)) || update.playing === true)
+      ['flowTime', 'showTime', 'washTime', 'flashTime', 'realTime'].includes(key)) || update.playing === true)
     frozenShotPixels = null;
   const changesView = update.sphereView
     ? update.sphereView !== sphereVisibility().mode
@@ -444,6 +460,11 @@ function setState(next) {
     clothVisibilityOverride = null;
     tubeVisibilityOverride = null;
   } else if (update.formStyle) delete state.sphereView;
+  // Each newly selected performance starts at its own source clock. Store that
+  // clock in views/recipes, independently of the long-running studio clocks.
+  if (!Object.hasOwn(update, 'showTime') &&
+      ((update.look && update.look !== state.look) ||
+       (update.seed !== undefined && update.seed !== state.seed))) update.showTime = 0;
   Object.assign(state, update);
   if (update.palette) paletteWalk.reset(state.palette);
   syncTimeOfDay();
@@ -551,6 +572,11 @@ function syncWipeUI() {
 }
 function drawLook(renderState, renderPixels) {
   applyFormStyle(renderState, false);
+  const diffuse = Boolean(SHOWS[renderState.look].clothDiffusion);
+  material.uniforms.clothDiffusionEnabled.value = diffuse ? 1 : 0;
+  if (diffuse) clothDiffusion.update(renderPixels,
+    renderPixels === pixels && frozenShotPixels ? frozenShotPixels :
+      fieldRevisions.get(renderPixels));
   texture.image.data = renderPixels;
   texture.needsUpdate = true;
   const light = skyPresetLighting(renderState.atmosphere);
@@ -706,8 +732,9 @@ function shotRecipe() {
   if (!frozenShotPixels) {
     const artworkState = selectedSource === 'tree-voices'
       ? { ...state, paletteColors: paletteWalk.colors(state.palette) } : state;
-    renderArtwork(artworkPoints, state.flowTime, artworkState, pixels,
+    flashStats = renderArtwork(artworkPoints, state.flowTime, artworkState, pixels,
       musicFrame ? { ...musicFrame, amount: state.audioReaction } : null);
+    if (flashStats.recoveredPending) throw new Error('Wait for the recovered pattern to finish seeking.');
   }
   drawCurrentFrame();
   const box = canvas.getBoundingClientRect();
@@ -902,9 +929,12 @@ async function createScene() {
   texture = new THREE.DataTexture(pixels, 22, fixtureCount, THREE.RGBAFormat, THREE.FloatType);
   texture.minFilter = texture.magFilter = THREE.NearestFilter;
   texture.generateMipmaps = false;
+  clothDiffusion = createClothDiffusion(THREE, fixtureCount);
   const material = new THREE.ShaderMaterial({
     uniforms: {
       artwork: { value: texture },
+      diffusedArtwork: { value: clothDiffusion.texture },
+      clothDiffusionEnabled: { value: 0 },
       fixtureCount: { value: fixtureCount },
       brightness: { value: state.brightness },
       softness: { value: state.softness },
@@ -1160,6 +1190,7 @@ async function loadModel() {
   resize();
   new ResizeObserver(resize).observe(canvas.parentElement);
   await preloadAssets();
+  await loadRecoveredShows(loadJSON, loadBytes);
   ({
     scene,
     metadata,
@@ -1175,6 +1206,10 @@ async function loadModel() {
   artworkPoints = prepareArtworkPoints(points);
   updateCamera();
   flashStats = renderArtwork(artworkPoints, state.flowTime, state, pixels, null);
+  if (SHOWS[state.look].clothDiffusion) {
+    clothDiffusion.update(pixels, fieldRevisions.get(pixels));
+    material.uniforms.clothDiffusionEnabled.value = 1;
+  }
   texture.needsUpdate = true;
   tubeLights.update(state, camera, skyPresetLighting(state.atmosphere));
   environment.update(state, pixels, camera, lightingSource());
@@ -1231,6 +1266,7 @@ async function loadModel() {
     seek: (t) =>
       setState({
         flowTime: t,
+        showTime: t,
         washTime: t,
         flashTime: t,
         realTime: t,
@@ -1309,6 +1345,7 @@ async function loadModel() {
     loadingStatus,
     stats: () => ({
       frames: frameCount,
+      recoveredSeeking: Boolean(flashStats.recoveredPending),
       wipe: lookWipe.status(),
       wrapMaterial: { ...WRAP_MATERIAL },
       regions: fixtureCount * 22,
@@ -1355,6 +1392,7 @@ async function loadModel() {
       const presence = SHOWS[state.look].spectralIdle ? spectralMusicPresence(musicFrame) : 1;
       const flowRate = 0.45 * (1 - presence) + (musicFrame?.flowRate ?? 1) * presence;
       state.flowTime += dt * state.flowSpeed * flowRate;
+      if (SHOWS[state.look].renderField) state.showTime += dt * state.flowSpeed;
       state.washTime += dt * state.washSpeed;
       state.flashTime += dt * state.flashSpeed;
       state.realTime += dt;
@@ -1364,6 +1402,7 @@ async function loadModel() {
         const sourceRate =
           0.45 * (1 - sourcePresence) + (musicFrame?.flowRate ?? 1) * sourcePresence;
         source.flowTime += dt * source.flowSpeed * sourceRate;
+        if (SHOWS[source.look].renderField) source.showTime += dt * source.flowSpeed;
         source.washTime += dt * source.washSpeed;
         source.flashTime += dt * source.flashSpeed;
         source.realTime += dt;
@@ -1396,6 +1435,7 @@ async function loadModel() {
       state.autoBurst,
       state.burstAt,
       state.flowTime,
+      state.showTime,
       state.washTime,
       state.flashTime,
       state.realTime,
@@ -1424,7 +1464,7 @@ async function loadModel() {
       }
     }
     if (!frozenShotPixels && (
-      signature !== lastArtworkState ||
+      signature !== lastArtworkState || flashStats.recoveredPending ||
       state.audioReaction !== lastReaction ||
       (music && state.playing)
     )) {

@@ -120,16 +120,23 @@ export function prepareArtworkPoints(points) {
     flowDirections[i + 1] = y / flowLength;
     flowDirections[i + 2] = z / flowLength;
   }
-  return { directions, flowDirections, length: points.length };
+  return { directions, flowDirections, positions: points, length: points.length };
 }
 
-export function renderArtwork(points, seconds, state, out, music = null) {
+export function renderArtwork(points, seconds, state, out, music = null, { maxSteps = Infinity } = {}) {
   const { directions, flowDirections } = points.directions ? points : prepareArtworkPoints(points);
   const seed = Number(state.seed) || 1,
     look = Object.hasOwn(LOOK_INFO, state.look) ? state.look : 'lava';
   const p = state.paletteColors || PALETTES[state.palette] || PALETTES[LOOK_INFO[look].palette],
     c = [0, 0, 0];
   const show = SHOWS[look];
+  if (show.renderField) return show.renderField({
+    points: points.positions ?? points,
+    seconds: state.showTime ?? seconds,
+    seed,
+    out,
+    maxSteps,
+  });
   const spectralIdle = show.spectralIdle ? 1 - spectralMusicPresence(music) : 0;
   if (show.spectralIdle && music)
     music = { ...music, amount: (music.amount ?? 0) * (1 - spectralIdle) };

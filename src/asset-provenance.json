@@ -169,5 +169,21 @@
       }
     ],
     "playa_reference": "https://survival.burningman.org/survival-health-and-safety/survival/"
+  },
+  "recovered_bm_patterns": {
+    "source": "Supplied Kugel archive; source mode IDs 1\u20137 and 9",
+    "provenance": "shows/recovered/provenance.json",
+    "credit": "Sonic Sphere Kugel lighting source and its contributors",
+    "rights": "Recovered source and image retain their original rights; the project MIT license does not relicense them.",
+    "adaptations": [
+      "Seeded deterministic 60 Hz simulation and defined initialization",
+      "Fixed incidental color texture; intentional motion retained",
+      "212 fixture angular adaptation and distance-dependent spandex transmission"
+    ],
+    "excluded": [
+      "OSC-position lights (mode 0)",
+      "Video mapping (mode 8)",
+      "MIDI noise layer"
+    ]
   }
 }

@@ -47,6 +47,12 @@ sphereStudio.seek(24);
 
 Appearance changes may be queued while a wipe is active. Wait until both `wipeStatus().active` and `.queued` are false before exporting a comparison image. `applyTheme()` returns the current state immediately, so it is not a transition-completion promise. `setLook()` and `setState()` ignore unsupported values.
 
+The eight [recovered BM shows](recovered-shows.md) use `showTime` for their
+seeded source simulation. Selecting another show or seed starts it at zero;
+explicit `showTime` values restore that performance phase. Long seeks catch up
+without blocking the UI. Also wait until `stats().recoveredSeeking` is false
+before capturing a comparison; `shotRecipe()` rejects an unfinished seek.
+
 Music and visual playback are independent. Audible startup can require a user gesture; a console call cannot bypass that browser rule. Optional tab capture opens the browser's own chooser when supported. The app never requests microphone access.
 
 At the exact center, negative elevation looks upward; `-Math.PI / 2` looks straight up. Positive elevation looks down. The contributor studio's Interior camera starts with a gentle upward view.

@@ -1,0 +1,73 @@
+{
+  "source_archive": "Kugel source supplied by the maintainer",
+  "source_url": "https://www.dropbox.com/scl/fi/4pqhpqge43hnffjwotahy/kugel.zip?rlkey=2qlgzwlyh143yryisizq8yq1l&dl=0",
+  "archive_sha256": "787f8b55ff9fd7ec7a2c39bfea8b0d895ddf0619c8616e05cd7003718382d075",
+  "source_files": {
+    "globals.h": "37fa80b176b62266abd992dcaf4af975bf87642e8006f10ce345e20829a11327",
+    "ofApp.cpp": "28684e372fa7ad4ffdb7afd1c1791c14826a44048a8c744141b46d54034933d6",
+    "ofFixture.cpp": "64edf1bc55c34a068a8f1a6d896f155144325c34f870c4254fb611e895d7e96c",
+    "Canvas.cpp": "6b56f725d7f0defcc6da0d1b86d9ea1710c63ff5687724152d64f62c96a14a8e",
+    "effect/Effect.h": "9d86e3573117162a172fb831f6c0bc12cdc0abac2e6f0d1fb84288f0b6356138",
+    "effect/efWave.cpp": "88cb9d8d751c50d7d17db615dc57c510e49bc6431214f8c865d7dfd1bc750435",
+    "effect/efRings.cpp": "3fbc83c462a12c348f5a8608da27dbad803f79913de40bf6099ae5a772fad8b9",
+    "effect/efRings.h": "9182d3f012ded3f7fbcecc5b8a30cb5eb974820565d9e9e838e8d61a563b5d08",
+    "effect/efStars.cpp": "8bbf9613011764acce10e66122eb194d319ea816acc1b46857f2113a7febe893",
+    "effect/efVirtualPoint.cpp": "8421a7d6bd419e5e155c1ca91938c688f1bce35d567c02dfd60bf11bf788b792",
+    "effect/efVirtualPointAmbient.cpp": "53747dfabe6237ef62eca6d8f27de0bc32eb8ca3da1d332a800e07a04731d894",
+    "effect/efBloom.cpp": "6e1dcee1239241511e1f646a3b61656efa7a78d80f6562904be2e3b38455eca8",
+    "effect/efBloom.h": "f650a62f83adb42d4cba6c675008c10a7f0321777322473061cb62b64eb55248",
+    "effect/efNoise.cpp": "da78cbe93141c9895e65cc12680d46f4bac433267beede112ece95f8cc3bd564"
+  },
+  "source_modes": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    9
+  ],
+  "excluded_modes": [
+    0,
+    8
+  ],
+  "simulation_hz": 60,
+  "portable_choices": [
+    "Seeded generator replaces absent historical RNG seed",
+    "Defined star initialization",
+    "Explicit cyclic byte color-wheel conversion replaces undefined C++ floating-point casts",
+    "Source width fixed at its declared 1920 pixels",
+    "Current cloth/LED rendering adapted from original logical segment field"
+  ],
+  "cloth_transmission": {
+    "angular_blur_sigmas_in_samples": [
+      1.6,
+      2.8,
+      4.2,
+      7
+    ],
+    "mixing_increases_with_surface_distance": true,
+    "tube_radius_metres": 0.0524,
+    "distance_scale_metres": 0.32,
+    "angular_interpolation": "cyclic cubic B-spline",
+    "preserves_mean_radiance": true,
+    "unintended_per_frame_texture_noise": false,
+    "direct_exposed_led_field_preserved": true,
+    "measurement_status": "visual approximation guided by user reference"
+  },
+  "assets": {
+    "nodes.json": {
+      "bytes": 29258,
+      "sha256": "9fe82549b88e9d5e389fa57f5b62e2816edb151eef423030d1811ef6e6ca0261"
+    },
+    "point-image.json": {
+      "bytes": 177,
+      "sha256": "33f32ee9043fd65fe450a1bcce79a9e258c64616952effde28c90ea2b810004e"
+    },
+    "point.rgb.gz": {
+      "bytes": 235590,
+      "sha256": "37b6d5f46870d2045009287dcdc6cdc7e7bdc1c381bbcf9f9dfb53163647877e"
+    }
+  }
+}

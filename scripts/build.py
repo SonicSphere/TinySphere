@@ -24,6 +24,9 @@ def main():
     asset_bytes = {'assets/burning-man/' + path.name: path.stat().st_size
                    for path in sorted((SOURCE / 'assets/burning-man').iterdir())
                    if path.is_file() and 'assets/burning-man/' + path.name not in source_only}
+    asset_bytes.update({path.relative_to(SOURCE).as_posix(): path.stat().st_size
+                        for path in sorted((SOURCE / 'assets/recovered-bm').rglob('*'))
+                        if path.is_file()})
     asset_revisions = {name: hashlib.sha256((SOURCE / name).read_bytes()).hexdigest()[:16]
                        for name in asset_bytes}
     asset_digest = hashlib.sha256()

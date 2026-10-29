@@ -6,7 +6,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 FOLDERS = {'src', 'assets', 'docs', 'examples', 'tests', 'scripts', '.github'}
 FILES = {'README.md', 'CONTRIBUTING.md', 'CREDITS.md', 'LICENSE', 'LICENSE-STATUS.md', 'AGENTS.md',
-         'package.json', '.gitignore', '.gitattributes', '.prettierrc.json', '.prettierignore'}
+         'package.json', 'CHANGELOG.md', '.gitignore', '.gitattributes', '.prettierrc.json', '.prettierignore'}
 GENERATED = {'src/load-manifest.js', 'src/assets/burning-man/installation-performance.json',
              'src/assets/burning-man/installation.lanes4.bin.gz',
              'src/assets/burning-man/topography.lanes4.bin.gz'}

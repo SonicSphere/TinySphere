@@ -1,5 +1,15 @@
 # Tiny Sphere · Public MIT release
 
+## 1.2.0 · Recovered BM shows · 29 October 2026
+
+Wave, Orbit spine circle, Spinner, Ambient points, Stars, Rotating image, Rings,
+and Bloom join Vibe shift, giving the rotation 17 looks. The reviewed ports keep
+their source colors and intentional motion, fixed spatial color texture, and
+smooth light mixing over the spandex. OSC-position lights, video mapping, and
+MIDI input remain excluded. See [the source notes](recovered-shows.md).
+
+## Initial public source · 28 October 2026
+
 Released 28 October 2026 at [SonicSphere/TinySphere](https://github.com/SonicSphere/TinySphere) with the live simulator on [GitHub Pages](https://sonicsphere.github.io/TinySphere/). The complete source, contribution guides, bundled assets, and six selected screenshots are public. The original project code and materials use the [MIT license](../LICENSE); separately credited third-party material retains its own rights and notices.
 
 This release includes the latest approved main behavior through Site version 53: continued center zoom to a 330° diagonal stereographic lens, exact-pole stability, 80/10/10 dice visibility, two camera controls with the approved View reset pose, and desktop S screenshots without a menu or readouts. `main` automatically deploys only after its build, tests, and distribution checks pass.

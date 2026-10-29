@@ -7,6 +7,8 @@ import { defineThemes } from '../src/themes/registry.js';
 import { renderArtwork } from '../src/engine/artwork.js';
 import exampleShow from '../examples/longitude-waves.js';
 import exampleTheme from '../examples/blue-hour.js';
+import { loadRecoveredTestData } from './helpers/recovered-data.mjs';
+await loadRecoveredTestData();
 
 for (const [id, stops] of Object.entries(PALETTES)) {
   assert.equal(stops.length, 5, `${id}: palette walk requires five stops`);
@@ -31,7 +33,7 @@ for (const show of Object.values(SHOWS))
         renderArtwork(
           points,
           37.2,
-          { look: show.id, palette, seed: 321, detail, wildness: 1, flashIntensity: 0 },
+          { look: show.id, palette, seed: 321, detail, wildness: 1, flashIntensity: 0, showTime: 0.4 },
           output,
           {
             amount,

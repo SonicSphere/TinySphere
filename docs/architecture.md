@@ -16,6 +16,12 @@ show.prepare() → show.sample() → shared effects → radial light texture
 
 `src/shows/` owns animation math. A show prepares per-frame data and samples linear RGB plus intensity over normalized sphere directions. The field drives 21 angular samples and one center sample per fixture. The same angular field colors the tube LEDs; cloth-center light is excluded from exposed-tube illumination.
 
+The eight recovered Kugel shows use a fixed-step `renderField()` implementation
+to retain their original fixture-based colors and trails. Their `showTime` clock
+and seed travel with saved views, recipes, and the two sides of an appearance
+wipe. The app loads their shared source assets once. Only these shows use the
+distance-dependent cloth diffusion texture; exposed LEDs retain direct samples.
+
 `src/themes/` owns named appearance presets and palettes. Registries provide explicit, reviewable content lists. The app exposes them through its browser API. The theme preset changes appearance through the existing half-second wipe and preserves camera and audio.
 
 `src/engine/` loads and decodes geometry, prepares the sample field, applies shared artwork effects, maps LED colors, and composites transitions. During a wipe, both looks use the same scene and camera. The accepted performance geometry keeps 212 fixtures and the original frame layout while reducing displayed cloth and terrain detail.

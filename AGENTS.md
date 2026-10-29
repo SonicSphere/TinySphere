@@ -1,5 +1,14 @@
 # Public GitHub source and Pages — 28 October 2026
 
+Jeremy approved the eight reviewed `BM-PatternPorts` shows for main and Vibe
+shift on 29 October 2026. Register the original nine shows plus modes 1–7 and 9
+under `src/shows/`; keep modes 0/8 and MIDI input excluded. Recovered shows retain
+their reviewed fixed spatial texture, original colors, fixed 60 Hz simulation,
+and distance-dependent cloth diffusion. Direct tube LEDs and existing looks keep
+their established response. `showTime` and the seed identify the performance;
+source and target clocks remain independent during the half-second wipe.
+See `docs/recovered-shows.md` and `src/shows/recovered/provenance.json`.
+
 Jeremy authorized the complete project as a public repository, public GitHub Pages website, and MIT release. The repository is **https://github.com/SonicSphere/TinySphere**; the app is **https://sonicsphere.github.io/TinySphere/**. `main` is the release branch. `.github/workflows/check.yml` checks every pull request and checks, builds, and deploys `main`. Publish only the generated `dist/` artifact to Pages. Never include credentials, local QA, or parent-workspace files. Preserve third-party license notices and creator attribution; see `LICENSE`, `LICENSE-STATUS.md`, and `CREDITS.md`.
 
 The source history and all six selected screenshots are retained. This supersedes the earlier local-only preparation and undecided-license notes. The original Sites publication and parent workspace are tracked separately.

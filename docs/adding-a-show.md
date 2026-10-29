@@ -65,6 +65,20 @@ Ordinary shows inherit the shared pulse/wash/spark response. A show that directl
 
 ## See it
 
+### Recovered fixture-based shows
+
+The [recovered BM shows](recovered-shows.md) use the optional
+`renderField({ points, seconds, seed, out })` contract in place of
+`prepare()`/`sample()`. It fills linear RGBA for every supplied XYZ point and
+returns light-field statistics. The fixed 212-fixture renderer uses its exact
+angular adapter; direction-only authoring probes sample the nearest fixture's
+mean radiance. This path owns its source colors and effects and bypasses the
+shared artwork overlays. Keep ordinary new direction-based shows on the simpler
+`prepare()`/`sample()` contract.
+
+Asset loading occurs once in the application, before the first field render.
+Show evaluation remains synchronous and independent of the DOM and audio player.
+
 ```sh
 npm run check
 ```

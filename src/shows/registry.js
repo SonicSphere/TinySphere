@@ -9,8 +9,9 @@ export function defineShows(definitions) {
     if (!show.name || !show.description) throw new Error(`${show.id} needs a name and description`);
     if (!Object.hasOwn(PALETTES, show.palette))
       throw new Error(`${show.id} uses an unknown palette`);
-    if (typeof show.prepare !== 'function' || typeof show.sample !== 'function') {
-      throw new Error(`${show.id} needs prepare() and sample()`);
+    if (typeof show.renderField !== 'function' &&
+        (typeof show.prepare !== 'function' || typeof show.sample !== 'function')) {
+      throw new Error(`${show.id} needs prepare() and sample(), or renderField()`);
     }
     if (show.audioMode !== undefined && show.audioMode !== 'bands') {
       throw new Error(`${show.id} has an unknown audioMode`);

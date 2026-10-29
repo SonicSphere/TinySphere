@@ -7,10 +7,11 @@ import ember from './ember.js';
 import strobe from './strobe.js';
 import eq from './eq.js';
 import spectral from './spectral.js';
+import { RECOVERED_SHOWS } from './recovered/index.js';
 import { defineShows } from './registry.js';
 
 // Add an import and one entry here. No renderer changes are needed.
-export const SHOWS = defineShows([lava, velvet, honey, aurora, opal, ember, strobe, eq, spectral]);
+export const SHOWS = defineShows([lava, velvet, honey, aurora, opal, ember, strobe, eq, spectral, ...RECOVERED_SHOWS]);
 export const LOOK_INFO = Object.freeze(
   Object.fromEntries(
     Object.values(SHOWS).map(({ id, name, description, palette }) => [
