@@ -20,6 +20,16 @@ wood retains its original texture. Each appearance-wipe pass updates the probe
 uniforms for its own sky. The same attributes interpolate through center-lens
 refinement and return to their original geometry outside the sphere.
 
+The selected band and wood response is in `src/settings/material-balance.js`.
+Relative to the base materials, the bands return 30% of sky light and 52% of
+grouped show-light spill. Wood returns 82% of its sky light and 96% of its
+point-light/ground-bounce show spill. In Sunrise and Sunset, its reflected sky
+retains 55% of the original color saturation; the other skies retain their tint.
+`src/engine/material-balance.js` applies these fixed gains through the existing
+sleeve mask and wood material tags. The unmasked cloth, metal, light-field colors,
+wood texture, geometry and sky are unchanged. Each wipe pass updates the warm-sky
+response for its own atmosphere. The local comparison controls are excluded.
+
 Soft ambient shade comes from `cloth-sky-visibility.bin.gz`, a per-vertex sky
 visibility mask baked against the accepted cloth, frame and supports. Its JSON
 metadata records the model hash, decoded hash, 98,683 vertices, 24 upper-sky rays
