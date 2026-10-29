@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.2.1 — 29 October 2026
+
+- Let the sky illuminate the white cloth, metal struts and wood legs across
+  Sunrise, Sunset, Peach dusk and Starry night.
+- Keep the crown brighter and the lower cloths more sheltered, with soft shade
+  from the installation and a whiter fabric response at Sunset.
+- Use the reviewed material settings while preserving the arrival view, light
+  shows, music, camera and production controls.
+
 ## 1.2.0 — 29 October 2026
 
 - Add Wave, Orbit spine circle, Spinner, Ambient points, Stars, Rotating image,

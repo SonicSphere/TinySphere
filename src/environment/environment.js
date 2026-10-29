@@ -145,6 +145,11 @@ void main(){
  #include <colorspace_fragment>
 }`;
 
+// Reuse the analytic sky for diffuse material light without a second palette.
+export const SKY_COLOR_GLSL = backdropFragment.slice(
+  backdropFragment.indexOf('float hash('), backdropFragment.indexOf('void main(){'),
+);
+
 export async function createPlayaEnvironment(
   scene,
   renderer,

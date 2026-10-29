@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "geometrySHA256": "87a60538138531dd78739fda5e79424bbe0625702b9c02c4ab107f1768f46daf",
+  "vertices": 98683,
+  "decodedBytes": 394732,
+  "decodedSHA256": "398ac37397697f57eceac2f3236a12e2e18c1d133338079f1aff3339155a7520",
+  "path": "assets/burning-man/cloth-sky-visibility.bin.gz",
+  "method": "Actual model triangles; double-sided cosine-weighted upper-sky visibility",
+  "skyRaysPerVertex": 24,
+  "triangles": 226184,
+  "rayOffsetMetres": 0.008,
+  "rayDistanceMetres": 30,
+  "minimum": 0.0,
+  "maximum": 1.0,
+  "mean": 0.5139220031494723,
+  "seconds": 17.305516249965876,
+  "limits": "Soft diffuse-sky occlusion approximation; no direct sun or changing LED shadow rays."
+}

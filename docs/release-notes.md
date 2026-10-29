@@ -1,5 +1,15 @@
 # Tiny Sphere · Public MIT release
 
+## 1.2.1 · Sky-lit materials · 29 October 2026
+
+The white cloth, metal struts and wood legs now pick up diffuse light from the
+existing sky. The crown stays brighter than the sheltered lower fabric; soft
+ambient shade adds depth where the installation blocks the sky. Sunset fabric
+retains a little warmth with a whiter appearance. Starry night keeps its faint
+sky response. No overhead sun is added. The approved material settings apply
+across the themes without changing the arrival view or light-show playback.
+The production controls stay the same. See [material lighting](sky-lighting.md).
+
 ## 1.2.0 · Recovered BM shows · 29 October 2026
 
 Wave, Orbit spine circle, Spinner, Ambient points, Stars, Rotating image, Rings,

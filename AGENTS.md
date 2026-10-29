@@ -1,5 +1,17 @@
 # Public GitHub source and Pages — 28 October 2026
 
+Jeremy approved promotion of the sky-lit appearances on 29 October 2026.
+`src/settings/sky-cloth.js` holds the selected material settings: sky fill 0.83,
+horizon 0.68, transmission 0.21, vertical falloff 0.74, strut 1.53, wood 2.11,
+cloth 0.83, shadows 0.26 and Sunset whiteness 0.58. Apply the shared analytic sky
+to cloth, matte-white sleeves, struts and wood, with brighter crown and sheltered
+base; no overhead sun. The baked visibility mask is geometry/hash validated.
+Preserve the existing arrival camera, show, orbit, music and LED playback.
+The local experiment's selected Honey scene, closer camera, master blackout,
+sliders, comparison UI and study API are excluded. See `docs/sky-lighting.md`;
+release evidence stays outside this repository under
+`../BM-SkyCloth/promotion/qa/`. Keep the local experiment intact.
+
 Jeremy approved the eight reviewed `BM-PatternPorts` shows for main and Vibe
 shift on 29 October 2026. Register the original nine shows plus modes 1–7 and 9
 under `src/shows/`; keep modes 0/8 and MIDI input excluded. Recovered shows retain
