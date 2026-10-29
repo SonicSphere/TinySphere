@@ -1,5 +1,15 @@
 # Public GitHub source and Pages — 28 October 2026
 
+Jeremy requested his current Chrome band/wood material settings as main defaults
+on 29 October 2026. `src/settings/material-balance.js` records the five selected
+gains: bands 0.30 sky / 0.52 show spill; wood 0.82 sky / 0.55 warm tint / 0.96 show
+spill. Keep the approved underlying sky settings. Warm tint is effective in
+Sunrise and Sunset only. Apply the existing sleeve mask and wood tags; preserve
+white spandex, wood grain, main cloths, metal, model, camera, arrival, show fields,
+music and production controls. Study comparison UI, saved query overrides,
+blackout and scene/camera defaults remain local. Capture and release evidence:
+`../BM-MaterialBalance/promotion/qa/`.
+
 Jeremy approved promotion of the sky-lit appearances on 29 October 2026.
 `src/settings/sky-cloth.js` holds the selected material settings: sky fill 0.83,
 horizon 0.68, transmission 0.21, vertical falloff 0.74, strut 1.53, wood 2.11,

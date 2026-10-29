@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.2 — 29 October 2026
+
+- Soften the white spandex attachment bands with the selected sky-light and
+  show-spill response, keeping the main cloths and metal unchanged.
+- Reduce reflected sky light and warm tint on the wood legs while keeping
+  their texture and independently tuned show-light spill.
+
 ## 1.2.1 — 29 October 2026
 
 - Let the sky illuminate the white cloth, metal struts and wood legs across

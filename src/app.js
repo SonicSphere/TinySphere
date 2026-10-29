@@ -1,3 +1,4 @@
+import { createMaterialBalance } from './engine/material-balance.js';
 import { createSkyClothLighting, applySkyClothMaterial, applySkyFrameMaterials } from './engine/sky-cloth.js';
 import { loadClothOcclusion } from './engine/cloth-occlusion.js';
 import {normalizeOpticalInput,gestureZoomPosition} from './camera/optical-zoom.js';
@@ -311,6 +312,7 @@ let environment,
   hardwareNormalRepairs = 0;
 let clothDiffusion = null;
 let skyClothLighting = null;
+const materialBalance = createMaterialBalance();
 let lookWipe = null,
   queuedLook = null,
   sourcePixels = null;
@@ -575,6 +577,7 @@ function syncWipeUI() {
 }
 function drawLook(renderState, renderPixels) {
   skyClothLighting.update(renderState.atmosphere);
+  materialBalance.update(renderState.atmosphere);
   applyFormStyle(renderState, false);
   const diffuse = Boolean(SHOWS[renderState.look].clothDiffusion);
   material.uniforms.clothDiffusionEnabled.value = diffuse ? 1 : 0;
@@ -1176,6 +1179,8 @@ async function createScene() {
   skyClothLighting.update(state.atmosphere);
   applySkyClothMaterial(material, skyClothLighting);
   applySkyFrameMaterials(scene, skyClothLighting);
+  materialBalance.apply(material, scene);
+  materialBalance.update(state.atmosphere);
   return {
     scene,
     metadata,
