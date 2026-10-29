@@ -24,6 +24,12 @@ distance-dependent cloth diffusion texture; exposed LEDs retain direct samples.
 
 `src/themes/` owns named appearance presets and palettes. Registries provide explicit, reviewable content lists. The app exposes them through its browser API. The theme preset changes appearance through the existing half-second wipe and preserves camera and audio.
 
+`src/engine/sky-cloth.js` adds reflected light from the existing analytic sky to
+the cloth, frame and wood. `src/settings/sky-cloth.js` fixes the approved material
+gains; a geometry-validated sky-visibility mask supplies soft ambient shade.
+Sky lighting is independent of the show field and first-arrival state. See
+[material lighting](sky-lighting.md) for the probe, asset and regeneration path.
+
 `src/engine/` loads and decodes geometry, prepares the sample field, applies shared artwork effects, maps LED colors, and composites transitions. During a wipe, both looks use the same scene and camera. The accepted performance geometry keeps 212 fixtures and the original frame layout while reducing displayed cloth and terrain detail.
 
 `src/audio/` owns default-track playback, optional desktop tab capture, the worklet, and analysis worker. Playback has one direct speaker route. Preparation, playback, and analysis readiness are separate; a delayed analysis worker must not delay or duplicate the audible music. Browser autoplay policy still applies.

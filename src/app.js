@@ -1,3 +1,5 @@
+import { createSkyClothLighting, applySkyClothMaterial, applySkyFrameMaterials } from './engine/sky-cloth.js';
+import { loadClothOcclusion } from './engine/cloth-occlusion.js';
 import {normalizeOpticalInput,gestureZoomPosition} from './camera/optical-zoom.js';
 import { createFisheyeRenderer } from './camera/fisheye.js';
 import { applyMatteWrapMaterial, validateWrapMask, WRAP_MATERIAL } from './engine/wrap-material.js';
@@ -308,6 +310,7 @@ let renderer,
 let environment,
   hardwareNormalRepairs = 0;
 let clothDiffusion = null;
+let skyClothLighting = null;
 let lookWipe = null,
   queuedLook = null,
   sourcePixels = null;
@@ -571,6 +574,7 @@ function syncWipeUI() {
   $('new-look').setAttribute('aria-busy', active);
 }
 function drawLook(renderState, renderPixels) {
+  skyClothLighting.update(renderState.atmosphere);
   applyFormStyle(renderState, false);
   const diffuse = Boolean(SHOWS[renderState.look].clothDiffusion);
   material.uniforms.clothDiffusionEnabled.value = diffuse ? 1 : 0;
@@ -909,9 +913,10 @@ async function createScene() {
     base = 'assets/burning-man/';
   let metadata, fixtureCount, fieldRadius, center, points, pixels, texture, environment;
   loadingStage(82, 'Preparing the sphere');
-  const [model, packed] = await Promise.all([
+  const [model, packed, skyOcclusion] = await Promise.all([
     loadJSON(geometryAsset.metadataPath),
     loadBytes(geometryAsset.path),
+    loadClothOcclusion(loadJSON, loadBytes, geometryAsset),
   ]);
   metadata = model;
   const binary = await unpackGeometry(packed, geometryAsset);
@@ -1038,6 +1043,11 @@ async function createScene() {
         new THREE.InstancedBufferAttribute(new Float32Array(part.instances * 3), 3),
       );
     }
+    if (sail) {
+      if (skyOcclusion.values.length !== geometry.getAttribute('position').count)
+        throw Error('Soft sky shadows have the wrong cloth vertex count.');
+      geometry.setAttribute('skyVisibility', new THREE.BufferAttribute(skyOcclusion.values, 1));
+    }
     if (sail)
       geometry.setAttribute(
         'fixtureId',
@@ -1162,6 +1172,10 @@ async function createScene() {
     { loadJSON, loadBytes, loadTexture, ledEmitters: tubeLights.emitters },
   );
   applyMatteWrapMaterial(material, environment.wrapLighting);
+  skyClothLighting = createSkyClothLighting(renderer, center, fieldRadius);
+  skyClothLighting.update(state.atmosphere);
+  applySkyClothMaterial(material, skyClothLighting);
+  applySkyFrameMaterials(scene, skyClothLighting);
   return {
     scene,
     metadata,
