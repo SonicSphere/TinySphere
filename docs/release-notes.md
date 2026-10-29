@@ -1,5 +1,14 @@
 # Tiny Sphere · Public MIT release
 
+## 1.2.2 · Quieter bands and wood · 29 October 2026
+
+The white spandex attachment bands now blend more softly with the frame. The
+wood legs pick up less sky light and a softer orange tint, retaining their
+grain. These material defaults use the values selected in the Chrome study:
+band sky light 30%, band show spill 52%, wood sky light 82%, warm sky tint 55%
+and wood show spill 96%. Warm tint applies in Sunrise and Sunset. Arrival,
+camera, light-show playback, main cloth response and metal shading are retained.
+
 ## 1.2.1 · Sky-lit materials · 29 October 2026
 
 The white cloth, metal struts and wood legs now pick up diffuse light from the
