@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.3.0 — 4 November 2026
+
+- Add the approved Fire Fast show in Scene palette to Vibe shift, with the
+  reviewed 1× motion and smooth cloth diffusion.
+- Preserve deterministic seeded playback, pause, saved views, held shots and
+  independent appearance-wipe fields. Keep the existing arrival and shows.
+- Retain LX attribution and license, with publication permission confirmed by
+  the maintainer.
+
 ## 1.2.2 — 29 October 2026
 
 - Soften the white spandex attachment bands with the selected sky-light and

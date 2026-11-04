@@ -8,6 +8,10 @@ Separately credited third-party material retains its existing rights and notices
 
 - Three.js: MIT, with the full notice in `src/vendor/THREE-LICENSE.txt`.
 - Lucide icons: ISC, with the full notice in `src/icons/LICENSE`.
+- Fire Fast flocking adaptation: original Heron Arts rights and LX terms remain
+  in `src/shows/flocking/LX-LICENSE.txt`. The maintainer confirmed permission to
+  publish this adapted source on 4 November 2026; MIT does not relicense it.
+  See [Fire Fast](docs/fire-fast.md).
 - Recovered Kugel patterns and the source image: original rights retained; no separate license file was present in the supplied archive. Tiny Sphere's MIT license does not relicense that material. See `docs/recovered-shows.md` and `src/shows/recovered/provenance.json`.
 - Fine Grained Wood texture: CC0-1.0 from Poly Haven.
 - Terrain source: USGS public-domain data.

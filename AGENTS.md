@@ -1,5 +1,19 @@
 # Public GitHub source and Pages — 28 October 2026
 
+Jeremy approved **Fire Fast in Scene palette** for GitHub main on 4 November
+2026 and confirmed permission from Heron Arts to publish the adapted source.
+Register only `fire-fast`, with the reviewed 1× selection speed and existing
+cloth diffusion. Keep its fixed 60 Hz seeded motion, 12-second pre-roll, exact
+fixture field, scene palette and palette walk. It bypasses extra studio effects.
+Preserve LX notices and the permission record in `docs/fire-fast.md`; MIT does
+not relicense this component. The five other study presets and all study UI
+remain local. Keep the main arrival, seventeen existing shows, sky materials,
+camera, music and controls. Release QA is outside this repository at
+`output/BM-Flocking/promotion/qa/` in the parent workspace.
+
+Isolated release preview: **http://127.0.0.1:4192/BM-Flocking/promotion/site/dist/**.
+The canonical permanent URL below remains unchanged. Reuse strict port 4192.
+
 Jeremy requested his current Chrome band/wood material settings as main defaults
 on 29 October 2026. `src/settings/material-balance.js` records the five selected
 gains: bands 0.30 sky / 0.52 show spill; wood 0.82 sky / 0.55 warm tint / 0.96 show
