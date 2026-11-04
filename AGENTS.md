@@ -1,5 +1,16 @@
 # Public GitHub source and Pages — 28 October 2026
 
+Jeremy approved **the shared BPM pill (study number 7)** for GitHub main on
+4 November 2026. Show **Sound reactive** only for the nine prepare/sample shows
+that receive audio; show no indicator for the eight recovered shows or Fire Fast.
+Preserve the original live BPM output and desktop Source selector. The selected
+treatment replaces the small stereo meters with the shared pill and adds its
+compact second row on phones. Tapping the label explains the pattern and current
+playback state; hiding it closes its details. Keep the existing music, light
+fields, camera, materials, arrival and creator notices. Other experiment variants
+and comparison controls stay local. Release evidence is outside this repository
+at `output/BM-SoundReactive/promotion/qa/` in the parent workspace.
+
 Jeremy approved **Fire Fast in Scene palette** for GitHub main on 4 November
 2026 and confirmed permission from Heron Arts to publish the adapted source.
 Register only `fire-fast`, with the reviewed 1× selection speed and existing

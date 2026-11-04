@@ -10,6 +10,8 @@ The lighting scenes are inspired by some of my favorite moments at Burning Man.
 
 The included music is Rolfe Kent's lovely *Tree Voices*, written specifically for the Sonic Sphere. You can also use other music by sharing a tab's audio in desktop Chrome.
 
+The BPM pill shows **Sound reactive** when the current light pattern responds to music. Other patterns leave the indicator empty. Tap the label for details.
+
 I'd like to import our existing light and music shows so they can be replayed here. The code is organized so that others can add new looks, visual themes, and light shows.
 
 Eight [recovered Burning Man patterns](docs/recovered-shows.md) now join the nine original looks in Vibe shift, including Wave, Spinner, Rings, Stars, and Bloom.

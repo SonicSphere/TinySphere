@@ -63,6 +63,10 @@ The palette contains five linear-RGB stops. Import `samplePalette` from `./math.
 
 Ordinary shows inherit the shared pulse/wash/spark response. A show that directly visualizes frequency bands can set `audioMode: 'bands'`; this suppresses the ambient wash and spark layer. The existing Spectral blobs show also uses `spectralIdle: true` to transition into its own motion in silence. Inspect [Concentric EQ](../src/shows/eq.js) and [Spectral blobs](../src/shows/spectral.js) for those examples.
 
+The BPM pill identifies these `prepare()`/`sample()` shows as **Sound reactive**.
+The `renderField()` path below bypasses the audio layers and shows no indicator.
+This describes pattern capability, including while music is paused.
+
 ## See it
 
 ### Recovered fixture-based shows
