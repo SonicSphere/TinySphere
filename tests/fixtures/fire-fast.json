@@ -1,5 +1,6 @@
 {
-  "source": "Approved BM-Flocking study: Fire Fast, Scene palette, speed 1; generated before production integration.",
+  "source": "Approved BM-Flocking study: Fire Fast, Scene palette, speed 1. Primary hashes recorded on ARM before production integration; x64 alternates captured from the unchanged original study and verified against the promoted show.",
+  "originalEngineSha256": "37a7ed3912b5d1e540f6d09dae56c61d0f6e45aab59dc0af989d3a097e944ff9",
   "fields": [
     {
       "seed": 2023,
@@ -41,37 +42,43 @@
       "seed": 99,
       "seconds": 0,
       "palette": "cherry",
-      "sha256": "e6f9677e4dfa0afc856b722327275cb6635bf40facdaaa8dfedfd89373583b44"
+      "sha256": "e6f9677e4dfa0afc856b722327275cb6635bf40facdaaa8dfedfd89373583b44",
+      "sha256X64": "e94319ce03a42d986db912f4ed8049180075bdd31426c3a8902ecf1790928e86"
     },
     {
       "seed": 99,
       "seconds": 0,
       "palette": "glacier",
-      "sha256": "214c09f7382ac6168d7ff9fd2db14cd6435df5c19a9cbb16c2e2015d578a5aaf"
+      "sha256": "214c09f7382ac6168d7ff9fd2db14cd6435df5c19a9cbb16c2e2015d578a5aaf",
+      "sha256X64": "abb83a210cdb9b17b59fa16e48de66329b9bf8a1a7f01e885bc4b8cc5556682b"
     },
     {
       "seed": 99,
       "seconds": 0.5,
       "palette": "cherry",
-      "sha256": "2b81f137b514ff956afb881bd63c2925120769fe80d7434610a9ced1e0b4898a"
+      "sha256": "2b81f137b514ff956afb881bd63c2925120769fe80d7434610a9ced1e0b4898a",
+      "sha256X64": "479aa6eb8b3eecfc847e13858214ba916c8ac3447e75c37a0cfbeb58d7c4fd55"
     },
     {
       "seed": 99,
       "seconds": 0.5,
       "palette": "glacier",
-      "sha256": "5d5b33d79a6058f9abdad701129b6a3996795b62e3168a10fca98baffdbcae9d"
+      "sha256": "5d5b33d79a6058f9abdad701129b6a3996795b62e3168a10fca98baffdbcae9d",
+      "sha256X64": "12731bf9ee3b4403d115e71091db833f9af38b635b5a155358bffb6b30ff2213"
     },
     {
       "seed": 99,
       "seconds": 3.35,
       "palette": "cherry",
-      "sha256": "7158d22b186156fe0441c046dc2703cf8a5516f0f4f12f0f01ed00721d483b28"
+      "sha256": "7158d22b186156fe0441c046dc2703cf8a5516f0f4f12f0f01ed00721d483b28",
+      "sha256X64": "272c84afab8f2ce554f6528d6343d1d27daec42a0f76699d848fd210f651fbf5"
     },
     {
       "seed": 99,
       "seconds": 3.35,
       "palette": "glacier",
-      "sha256": "73087492ec7e8cd44f2cb76523293e49b29a52e113fca41ffb628962828b33c0"
+      "sha256": "73087492ec7e8cd44f2cb76523293e49b29a52e113fca41ffb628962828b33c0",
+      "sha256X64": "2671e0684f509904ae7eede494895ee92c752d0941e7ff8eaaaf1fb459fb907f"
     }
   ]
 }

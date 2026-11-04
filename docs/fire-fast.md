@@ -16,9 +16,12 @@ palette mapping. Each center sample is the mean of its 21 perimeter samples.
 The show follows the selected scene palette, including the existing palette
 walk during music playback. It bypasses additional studio flashes, washes and
 audio overlays. The existing music player continues normally. `showTime` and
-the seed reproduce a performance, with bounded catch-up during long seeks and
-independent histories on both sides of an appearance wipe. Shot recipes hold
-the exact captured light field.
+the seed reproduce a performance on the same runtime, with bounded catch-up
+during long seeks and independent histories on both sides of an appearance
+wipe. As in the original study, small platform math differences can develop
+into different flock paths. ARM and x64 reference fields are tested against
+the unchanged study separately. Shot recipes hold the exact captured light
+field across runtimes.
 
 Only Fire Fast is registered. The study's other presets, controls, camera and
 sky defaults remain local. The main arrival and its other seventeen shows keep
