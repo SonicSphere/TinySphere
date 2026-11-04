@@ -16,8 +16,6 @@ function update(value, detail = stage) {
   progress = Math.max(progress, Math.min(100, value));
   stage = detail;
   document.getElementById('loading-progress').value = progress;
-  document.getElementById('loading-percent').textContent = Math.floor(progress) + '%';
-  document.getElementById('loading-detail').textContent = detail;
   document.body.dataset.loadingProgress = String(progress);
 }
 function networkProgress() {
@@ -116,7 +114,6 @@ export function failLoading(error) {
   document.getElementById('loading').hidden = false;
   document.getElementById('loading').setAttribute('aria-busy', 'false');
   document.getElementById('loading-title').textContent = 'Tiny Sphere could not load';
-  document.getElementById('loading-detail').textContent = 'Please try again.';
   document.getElementById('loading-retry').hidden = false;
   document.body.dataset.error = error.message;
 }

@@ -1,5 +1,10 @@
 # Public GitHub source and Pages — 28 October 2026
 
+Jeremy requested a minimal loading screen on 4 November 2026: show only
+**Tiny Sphere** and the progress bar. Do not display percentages or asset-stage
+captions. Retain real progress, internal loading-status diagnostics, and the
+failure title with Try again. Preserve the approved shared BPM pill and player.
+
 Jeremy approved **the shared BPM pill (study number 7)** for GitHub main on
 4 November 2026. Show **Sound reactive** only for the nine prepare/sample shows
 that receive audio; show no indicator for the eight recovered shows or Fire Fast.

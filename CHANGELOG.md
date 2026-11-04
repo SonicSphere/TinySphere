@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.2 — 4 November 2026
+
+- Simplify the loading screen to **Tiny Sphere** and a progress bar, removing
+  the percentage and asset-stage messages.
+
 ## 1.3.1 — 4 November 2026
 
 - Show a subtle **Sound reactive** indicator inside the BPM pill for patterns
