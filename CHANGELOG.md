@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.1 — 4 November 2026
+
+- Show a subtle **Sound reactive** indicator inside the BPM pill for patterns
+  that respond to music. Leave the indicator empty for other patterns.
+- Keep Source selection beside the shared pill on desktop and show the tempo
+  in a compact second player row on phones. Tap the indicator for details.
+
 ## 1.3.0 — 4 November 2026
 
 - Add the approved Fire Fast show in Scene palette to Vibe shift, with the
