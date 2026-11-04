@@ -445,7 +445,6 @@ body[data-music-source='tree-voices']:is([data-audio='connected'], [data-audio='
 .loading-meter {
   display: flex;
   align-items: center;
-  gap: 14px;
 }
 #loading-progress {
   display: block;
@@ -471,19 +470,6 @@ body[data-music-source='tree-voices']:is([data-audio='connected'], [data-audio='
 #loading-progress::-moz-progress-bar {
   background: var(--accent);
   border-radius: 10px;
-}
-#loading-percent {
-  min-width: 32px;
-  text-align: right;
-  color: #a4b6b0;
-  font-size: 10px;
-  font-variant-numeric: tabular-nums;
-}
-#loading-detail {
-  min-height: 16px;
-  margin: 13px 0 0;
-  font-size: 10px;
-  color: #748884;
 }
 #loading-retry {
   margin-top: 20px;
