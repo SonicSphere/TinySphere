@@ -4,7 +4,7 @@ import { loadClothOcclusion } from './engine/cloth-occlusion.js';
 import {normalizeOpticalInput,gestureZoomPosition} from './camera/optical-zoom.js';
 import { createFisheyeRenderer } from './camera/fisheye.js';
 import { applyMatteWrapMaterial, validateWrapMask, WRAP_MATERIAL } from './engine/wrap-material.js';
-import './ui/ui.js';
+import { syncPatternReaction } from './ui/ui.js';
 import { FORM_STYLES, createTubeLights } from './engine/tube-lights.js';
 import { FORM_WEIGHTS, SPHERE_VIEWS, SPHERE_VIEW_WEIGHTS, chooseSphereView } from './engine/form-choice.js';
 import {
@@ -246,6 +246,7 @@ function syncAudioUI() {
     $('tempo-status').textContent = '— BPM';
     $('beat-dot').style.opacity = '.2';
   }
+  syncPatternReaction(SHOWS[state.look], state, status);
 }
 function syncTabAudio(status) {
   if (status.phase === 'connected') closeSourceMenu();
@@ -426,6 +427,7 @@ function syncUI() {
   $('mobile-orbit').setAttribute('aria-pressed', String(state.orbit));
   $('mobile-orbit-label').textContent = state.orbit ? 'Orbit on' : 'Orbit off';
   $('new-look').title = LOOKS[state.look] + ' · ' + SKY_LABELS[state.atmosphere] + ' — Vibe shift';
+  syncPatternReaction(SHOWS[state.look], state, activeAudio().status());
   Object.assign(document.body.dataset, {
     look: state.look,
     skyPreset: state.atmosphere,
