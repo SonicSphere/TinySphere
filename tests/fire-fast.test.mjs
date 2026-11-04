@@ -38,6 +38,16 @@ const held = out.slice();
 renderArtwork(prepared, 0, { ...state, seed: 99 }, out);
 renderArtwork(prepared, 0, state, out);
 assert.deepEqual(out, held, 'Wipe source and target histories stay independent');
+const outgoing = new Float32Array(out.length), incoming = new Float32Array(out.length);
+for (let i = 0; i < 20; i++) {
+  renderArtwork(prepared, 0, { ...state, seed: 431, showTime: .5 }, outgoing, null, { maxSteps: 12 });
+  result = renderArtwork(prepared, 0, { ...state, seed: 431 }, incoming, null, { maxSteps: 12 });
+}
+assert.equal(result.recoveredPending, false, 'A same-seed wipe cannot restart the other clock every frame');
+renderArtwork(prepared, 0, { ...state, seed: 431 }, out);
+assert.deepEqual(incoming, out, 'Bounded incoming wipe reaches its own timestamp');
+renderArtwork(prepared, 0, { ...state, seed: 431, showTime: .5 }, out);
+assert.deepEqual(outgoing, out, 'Outgoing wipe retains its independent timestamp');
 for (const seed of [11, 12, 13, 14, 15]) renderArtwork(prepared, 0, { ...state, seed }, out);
 renderArtwork(prepared, 0, state, out);
 assert.deepEqual(out, held, 'Cache eviction can reconstruct the same performance');

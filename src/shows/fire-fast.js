@@ -2,9 +2,13 @@ import { FlockingEngine, TICKS_PER_SECOND } from './flocking/engine.js';
 
 const performances = new WeakMap();
 
-function engineAt(points, seed, seconds, maxSteps) {
-  let engines = performances.get(points);
-  if (!engines) performances.set(points, engines = new Map());
+function engineAt(points, out, seed, seconds, maxSteps) {
+  let performance = performances.get(out);
+  if (!performance || performance.points !== points) {
+    performance = { points, engines: new Map() };
+    performances.set(out, performance);
+  }
+  const { engines } = performance;
   seed = Math.max(1, Math.min(2147483646, Math.trunc(seed)));
   let engine = engines.get(seed);
   if (!engine) engine = new FlockingEngine(points, {
@@ -12,7 +16,8 @@ function engineAt(points, seed, seconds, maxSteps) {
   });
   engines.delete(seed);
   engines.set(seed, engine);
-  // Current and outgoing wipe fields keep independent, bounded histories.
+  // Each output buffer owns its clock, including same-seed wipes that seek
+  // to different times. Keep the recent seeds bounded within each buffer.
   if (engines.size > 4) engines.delete(engines.keys().next().value);
   const target = Math.floor(Math.max(0, seconds) * TICKS_PER_SECOND + 1e-9);
   if (target < engine.tick) engine.restart(seed);
@@ -30,7 +35,7 @@ export default {
   defaultFlowSpeed: 1,
   clothDiffusion: true,
   renderField({ points, seconds, seed, palette, out, maxSteps = Infinity }) {
-    const { engine, pending } = engineAt(points, seed, seconds, maxSteps);
+    const { engine, pending } = engineAt(points, out, seed, seconds, maxSteps);
     engine.writeField(out, palette);
     return { burstPeak: 0, spectralIdle: 0, flockingPreset: 'fire-fast',
       recoveredPending: pending };
