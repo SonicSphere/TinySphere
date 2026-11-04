@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
+import { gunzipSync } from 'node:zlib';
 import { renderArtwork, prepareArtworkPoints } from '../src/engine/artwork.js';
 import { SHOWS } from '../src/shows/index.js';
 import { PALETTES } from '../src/themes/palettes.js';
@@ -11,14 +12,29 @@ const points = await loadSpherePoints(), prepared = prepareArtworkPoints(points)
 const out = new Float32Array(points.length / 3 * 4);
 const hash = field => createHash('sha256').update(Buffer.from(field.buffer, field.byteOffset, field.byteLength)).digest('hex');
 const reference = JSON.parse(await readFile(new URL('fixtures/fire-fast.json', import.meta.url)));
+const referenceBytes = gunzipSync(await readFile(new URL('fixtures/fire-fast.f32.gz', import.meta.url)));
+assert.equal(referenceBytes.length, reference.fields.length * out.byteLength);
+let maximumPlatformDelta = 0;
 assert.equal(Object.keys(SHOWS).length, 18);
 assert.deepEqual(PRESETS.map(preset => preset.id), ['fire-fast']);
 assert.equal(SHOWS['fire-fast'].clothDiffusion, true);
 assert.equal(SHOWS['fire-fast'].defaultFlowSpeed, 1);
-for (const sample of reference.fields) {
+for (const [index, sample] of reference.fields.entries()) {
   const state = { look: 'fire-fast', seed: sample.seed, showTime: sample.seconds, palette: sample.palette };
   renderArtwork(prepared, 11910, state, out);
-  assert.equal(hash(out), sample.sha256, 'Exact approved study field: ' + JSON.stringify(sample));
+  const bytes = referenceBytes.subarray(index * out.byteLength, (index + 1) * out.byteLength);
+  assert.equal(hash(bytes), sample.sha256, 'The recorded approved field must remain intact');
+  let maxDelta = 0, worstChannel = 0;
+  for (let i = 0; i < out.length; i++) {
+    assert.ok(Number.isFinite(out[i]));
+    const delta = Math.abs(out[i] - bytes.readFloatLE(i * 4));
+    if (delta > maxDelta) { maxDelta = delta; worstChannel = i; }
+  }
+  // ARM and x64 math libraries can round a final Float32 channel differently.
+  // Permit at most one Float32 step at 1.0, far below an 8-bit display step.
+  assert.ok(maxDelta <= 2 ** -23, 'Approved study field: ' + JSON.stringify({ ...sample,
+    maxDelta, worstChannel, actual: out[worstChannel], expected: bytes.readFloatLE(worstChannel * 4) }));
+  maximumPlatformDelta = Math.max(maximumPlatformDelta, maxDelta);
   const expected = out.slice();
   renderArtwork(prepared, 99999, { ...state, flashIntensity: 4, washAmount: 1.5, autoBurst: true }, out,
     { amount: 1, energy: 1, waves: [], sparks: [], tempo: { pulse: 1 } });
@@ -62,5 +78,5 @@ for (let fixture = 0; fixture < 212; fixture++) for (let c = 0; c < 3; c++) {
   for (let angle = 0; angle < 21; angle++) mean += out[(fixture * 22 + angle) * 4 + c] / 21;
   assert.ok(Math.abs(out[(fixture * 22 + 21) * 4 + c] - mean) < 1e-6);
 }
-console.log(JSON.stringify({ passed: true, approvedStudyFields: reference.fields.length,
+console.log(JSON.stringify({ passed: true, approvedStudyFields: reference.fields.length, maximumPlatformDelta,
   seededReplay: true, boundedSeek: true, independentWipes: true, paletteWalk: true }));
