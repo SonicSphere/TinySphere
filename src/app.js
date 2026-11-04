@@ -483,7 +483,8 @@ function setState(next) {
   }
 }
 function setLook(look) {
-  if (Object.hasOwn(LOOK_INFO, look)) setState({ look, palette: LOOK_INFO[look].palette });
+  if (Object.hasOwn(LOOK_INFO, look)) setState({ look, palette: LOOK_INFO[look].palette,
+    ...(SHOWS[look].defaultFlowSpeed === undefined ? {} : { flowSpeed: SHOWS[look].defaultFlowSpeed }) });
 }
 function applyTheme(id) {
   const next = themeState(id);
@@ -555,7 +556,7 @@ function randomizeLook() {
     sphereView,
     palette: palettes[Math.floor(Math.random() * palettes.length)],
     seed: 1 + Math.floor(Math.random() * 1000000),
-    flowSpeed: Math.round((0.6 + Math.random() * 1.1) * 10) / 10,
+    flowSpeed: SHOWS[look].defaultFlowSpeed ?? Math.round((0.6 + Math.random() * 1.1) * 10) / 10,
     detail: Math.round((0.7 + Math.random() * 0.75) * 20) / 20,
     wildness: Math.round((0.2 + Math.random() * 0.65) * 20) / 20,
   });

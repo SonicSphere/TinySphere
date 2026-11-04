@@ -1,0 +1,19 @@
+{
+  "sourceRepository": "SonicSphere/SonicSphere-LX",
+  "sourceBranch": "flocking",
+  "pattern": "FlockingPattern.java",
+  "preset": "fire_fast.lxd",
+  "approvedColorTreatment": "Scene palette",
+  "approvedSpeed": 1,
+  "fixedStepHz": 60,
+  "prerollSeconds": 12,
+  "sourceCopyright": "2023- Mark C. Slee, Heron Arts LLC",
+  "algorithmAttribution": "Processing Flocking example; source notes its 3D and reflecting-boundary modifications",
+  "publicationPermission": "On 4 November 2026 the maintainer confirmed permission from Heron Arts to publish this adapted Flocking source. The LX license and attribution remain; Tiny Sphere MIT does not relicense it.",
+  "sha256": {
+    "reference/BM-Flocking/FlockingPattern.java": "3106080b135b8f0631071934bece7c32340346b3ed12908cf086a363f364814c",
+    "reference/BM-Flocking/presets/fire_fast.lxd": "693cb9e1eadb68c33b3d51564ee7b7037bf248a32b59f249f59ba0e9071601aa",
+    "output/BM-Flocking/flocking/engine.js": "37a7ed3912b5d1e540f6d09dae56c61d0f6e45aab59dc0af989d3a097e944ff9"
+  },
+  "repositoryInventoryMainCommit": "78c987cb12727b842d34869058c4d92502af88c7"
+}

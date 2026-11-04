@@ -134,6 +134,7 @@ export function renderArtwork(points, seconds, state, out, music = null, { maxSt
     points: points.positions ?? points,
     seconds: state.showTime ?? seconds,
     seed,
+    palette: p,
     out,
     maxSteps,
   });

@@ -14,6 +14,8 @@ I'd like to import our existing light and music shows so they can be replayed he
 
 Eight [recovered Burning Man patterns](docs/recovered-shows.md) now join the nine original looks in Vibe shift, including Wave, Spinner, Rings, Stars, and Bloom.
 
+[Fire Fast](docs/fire-fast.md) adds quick-moving flocks of light in the scene palette, bringing the rotation to eighteen shows.
+
 I hope you enjoy it.
 
 [Open the simulator](https://sonicsphere.github.io/TinySphere/).

@@ -20,7 +20,7 @@ for (const id of [1, 3]) for (const trail of [0, 1]) {
   assert.deepEqual(Buffer.from(engine.colors), native, `Original C++ mode ${id}, trail ${trail}`);
 }
 assert.equal(createHash('sha256').update(image.data).digest('hex'), image.decodedSHA256);
-assert.equal(Object.keys(SHOWS).length, 17);
+assert.equal(Object.keys(SHOWS).length, 18);
 assert.deepEqual(RECOVERED_SHOWS.map((show) => show.sourcePattern), [1, 2, 3, 4, 5, 6, 7, 9]);
 const read = (path) => readFile(new URL('../src/' + path, import.meta.url));
 const metadata = JSON.parse(await read(geometryAsset.metadataPath));

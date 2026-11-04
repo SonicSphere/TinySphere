@@ -1,0 +1,77 @@
+{
+  "source": "Approved BM-Flocking study: Fire Fast, Scene palette, speed 1; generated before production integration.",
+  "fields": [
+    {
+      "seed": 2023,
+      "seconds": 0,
+      "palette": "cherry",
+      "sha256": "2253a5976f67c5b9c1ebdd0aefe1eb8948990caeafda161b01ac84b7026e6ac0"
+    },
+    {
+      "seed": 2023,
+      "seconds": 0,
+      "palette": "glacier",
+      "sha256": "ef7d319fbfcf1872b96c289def6f55b7e2d1b42166c8071f9e67f37daa755927"
+    },
+    {
+      "seed": 2023,
+      "seconds": 0.5,
+      "palette": "cherry",
+      "sha256": "02c26399cb9c32851149169d392124f811b1ca8fedbee92121f60e7c20e279ff"
+    },
+    {
+      "seed": 2023,
+      "seconds": 0.5,
+      "palette": "glacier",
+      "sha256": "54f4b323ac84b4f266d2afb38dc5d5259c656d663fdc5ab936df98a95b2c9faa"
+    },
+    {
+      "seed": 2023,
+      "seconds": 3.35,
+      "palette": "cherry",
+      "sha256": "fd038f31c81eedb7629fb3607b814c77847895598b949620f46611c81637d081"
+    },
+    {
+      "seed": 2023,
+      "seconds": 3.35,
+      "palette": "glacier",
+      "sha256": "971003aca86e3566bcd7638bd7d5ffad87072b86f6bdd698308b77b51c8a70cf"
+    },
+    {
+      "seed": 99,
+      "seconds": 0,
+      "palette": "cherry",
+      "sha256": "e6f9677e4dfa0afc856b722327275cb6635bf40facdaaa8dfedfd89373583b44"
+    },
+    {
+      "seed": 99,
+      "seconds": 0,
+      "palette": "glacier",
+      "sha256": "214c09f7382ac6168d7ff9fd2db14cd6435df5c19a9cbb16c2e2015d578a5aaf"
+    },
+    {
+      "seed": 99,
+      "seconds": 0.5,
+      "palette": "cherry",
+      "sha256": "2b81f137b514ff956afb881bd63c2925120769fe80d7434610a9ced1e0b4898a"
+    },
+    {
+      "seed": 99,
+      "seconds": 0.5,
+      "palette": "glacier",
+      "sha256": "5d5b33d79a6058f9abdad701129b6a3996795b62e3168a10fca98baffdbcae9d"
+    },
+    {
+      "seed": 99,
+      "seconds": 3.35,
+      "palette": "cherry",
+      "sha256": "7158d22b186156fe0441c046dc2703cf8a5516f0f4f12f0f01ed00721d483b28"
+    },
+    {
+      "seed": 99,
+      "seconds": 3.35,
+      "palette": "glacier",
+      "sha256": "73087492ec7e8cd44f2cb76523293e49b29a52e113fca41ffb628962828b33c0"
+    }
+  ]
+}
